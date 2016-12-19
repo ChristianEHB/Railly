@@ -1,11 +1,11 @@
 <resources>
     <string name="app_name">Railly</string>
-    <string name="from_view">From:</string>
-    <string name="to_view">To:</string>
-    <string name="from_text"> </string>
-    <string name="to_text"> </string>
-    <string name="time_view">Time</string>
-    <string name="hour_text">17:45</string>
-    <string name="date_text">17/12/2016</string>
-    <string name="search_button">Search</string>
+    <string name="view_from">From:</string>
+    <string name="view_to">To:</string>
+    <string name="text_from"> </string>
+    <string name="text_to"> </string>
+    <string name="view_time">Time</string>
+    <string name="text_hour">17:45</string>
+    <string name="text_date">17/12/2016</string>
+    <string name="button_search">Search</string>
 </resources>

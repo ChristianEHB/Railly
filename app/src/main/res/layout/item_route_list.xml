@@ -6,26 +6,51 @@
     android:paddingLeft="10dp"
     android:paddingTop="5dp"
     android:paddingBottom="5dp"
-    android:background="#ffffff"
-    android:orientation="vertical"
+    android:background="#ffffff">
+    <GridLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/route_item_departure"
+            android:text="Departure"
+            android:textSize="20sp"
+            android:textColor="#00a7f5"
+            android:layout_column="0"
+            android:layout_row="0"
+            />
+        <TextView
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/route_item_arrival"
+            android:text="Arrival"
+            android:textSize="20sp"
+            android:textColor="#f92a3f"
+            android:layout_column="0"
+            android:layout_row="1"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/route_item_arrivalTime"
+            android:layout_marginLeft="5dp"
+            android:text="17:45"
+            android:layout_column="1"
+            android:layout_row="0"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/route_item_departureTime"
+            android:layout_marginLeft="5dp"
+            android:text="19:30"
+            android:layout_column="1"
+            android:layout_row="1"
+            />
 
-    >
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/route_item_departure"
-        android:text="Departure"
-        android:textSize="20dp"
-        android:textColor="#00a7f5"
-        />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/route_item_arrival"
-        android:text="Arrival"
-        android:textSize="20dp"
-        android:textColor="#f92a3f"
-        />
+    </GridLayout>
+
 
 
 

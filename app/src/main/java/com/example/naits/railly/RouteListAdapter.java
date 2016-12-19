@@ -14,11 +14,11 @@ import java.util.List;
 
 public class RouteListAdapter extends BaseAdapter {
 
-    private Context contextRoute;
+    private Context routeContext;
     private List<Route> routeList;
 
     public RouteListAdapter(Context context, List<Route> routeList){
-        this.contextRoute = context;
+        this.routeContext = context;
         this.routeList = routeList;
     }
 
@@ -39,7 +39,7 @@ public class RouteListAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        View v = View.inflate(contextRoute, R.layout.item_route_list, null);
+        View v = View.inflate(routeContext, R.layout.item_route_list, null);
         TextView departureTextView = (TextView)v.findViewById(R.id.route_item_departure);
         TextView arrivalTextView = (TextView)v.findViewById(R.id.route_item_arrival);
         departureTextView.setText(routeList.get(position).getDeparture());

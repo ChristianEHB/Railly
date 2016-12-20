@@ -1,5 +1,6 @@
 package com.example.naits.railly;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.icu.util.Calendar;
 import android.os.Build;
@@ -9,6 +10,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -84,7 +86,6 @@ public class HomeActivity extends AppCompatActivity {
         int year = calendar.get(Calendar.YEAR);
         int month = calendar.get(Calendar.MONTH);
         int day = calendar.get(Calendar.DAY_OF_MONTH);
-
         return String.format("%d/%d/%d",day, month, year);
     }
 

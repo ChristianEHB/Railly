@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.naits.railly.RoutePlannerFragment"
+    tools:context="com.example.naits.railly.layout.RoutePlannerFragment"
     android:background="#ffffff">
 
     <!-- TODO: Update blank fragment layout -->

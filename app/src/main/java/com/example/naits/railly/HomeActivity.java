@@ -21,20 +21,17 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
+
         // Set TextView To Current Time
         setCurrentTime();
 
-        AutoCompleteTextView textViewArrival = (AutoCompleteTextView) findViewById(R.id.autocomplete_arrival);
-        // Get the string array
-        String[] stations = getResources().getStringArray(R.array.stations);
-        // Create the adapter and set it to the AutoCompleteTextView
-        ArrayAdapter<String> adapterArrival = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, stations);
-        textViewArrival.setAdapter(adapterArrival);
+        // Autocomplete for editTextFields
+        autoCompleteRoutePlanner();
 
-        AutoCompleteTextView textView = (AutoCompleteTextView) findViewById(R.id.autocomplete_departure);
-        // Create the adapter and set it to the AutoCompleteTextView
-        ArrayAdapter<String> adapterDeparture = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, stations);
-        textView.setAdapter(adapterDeparture);
+
+
+
+
     }
 
 
@@ -51,6 +48,35 @@ public class HomeActivity extends AppCompatActivity {
         startActivity(i);
     }
 
+
+
+
+
+    private void autoCompleteRoutePlanner(){
+        // Get the string array
+        String[] stations = getResources().getStringArray(R.array.stations);
+
+        // Create the adapter and set it to the AutoCompleteTextView
+        AutoCompleteTextView textViewArrival = (AutoCompleteTextView) findViewById(R.id.autocomplete_arrival);
+        AutoCompleteTextView textView = (AutoCompleteTextView) findViewById(R.id.autocomplete_departure);
+
+        ArrayAdapter<String> adapterArrival = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, stations);
+        ArrayAdapter<String> adapterDeparture = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, stations);
+
+        // Create the adapter and set it to the AutoCompleteTextView
+        textViewArrival.setAdapter(adapterArrival);
+        textView.setAdapter(adapterDeparture);
+    }
+
+
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    private void setCurrentTime(){
+        TextView textViewDate = (TextView) findViewById(R.id.textViewDate);
+        textViewDate.setText(setCurrentDate());
+        TextView textViewHour = (TextView) findViewById(R.id.textViewHour);
+        textViewHour.setText(setCurrentHour());
+    }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     private String setCurrentDate(){
@@ -73,11 +99,5 @@ public class HomeActivity extends AppCompatActivity {
         }
         return String.format("%d:%d", hour, min);
     }
-    @RequiresApi(api = Build.VERSION_CODES.N)
-    private void setCurrentTime(){
-        TextView textViewDate = (TextView) findViewById(R.id.textViewDate);
-        textViewDate.setText(setCurrentDate());
-        TextView textViewHour = (TextView) findViewById(R.id.textViewHour);
-        textViewHour.setText(setCurrentHour());
-    }
+
 }

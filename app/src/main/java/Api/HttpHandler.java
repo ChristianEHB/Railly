@@ -14,6 +14,7 @@ import java.net.URL;
 
 /**
  * Created by naits on 20/12/2016.
+ * code from http://www.androidhive.info/2012/01/android-json-parsing-tutorial/
  */
 
 public class HttpHandler {

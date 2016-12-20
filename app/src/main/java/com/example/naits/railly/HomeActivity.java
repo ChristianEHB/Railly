@@ -11,6 +11,7 @@ public class HomeActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        //Ik heb deze code toegevoegd om te testen of ik kan pushen -Ruben
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         AutoCompleteTextView textViewArrival = (AutoCompleteTextView) findViewById(R.id.autocomplete_arrival);

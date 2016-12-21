@@ -20,12 +20,17 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class HomeActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener{
 
     private int hour, min;
     private int year, month, day;
-    private  AutoCompleteTextView textViewArrival, textViewDeparture;
+    private AutoCompleteTextView textViewArrival, textViewDeparture;
     private ArrayAdapter<String> locationsAdapter;
+    private List<String> stationList;
     private TextView textViewDate, textViewHour;
 
 
@@ -35,7 +40,7 @@ public class HomeActivity extends AppCompatActivity implements DatePickerDialog.
         //Ik heb deze code toegevoegd om te testen of ik kan pushen -Ruben
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-
+        stationList = Arrays.asList(getResources().getStringArray(R.array.stations));
 
         // Set TextView To Current Time
         setCurrentTime();
@@ -132,12 +137,26 @@ public class HomeActivity extends AppCompatActivity implements DatePickerDialog.
     }
 
     protected void searchOnClick(View view){
-        Intent i = new Intent(this, RouteActivity.class);
-        startActivity(i);
+        if(checkIfInputIsCorrect(textViewDeparture.getText().toString()) == true && checkIfInputIsCorrect(textViewArrival.getText().toString()) == true ){
+            Intent i = new Intent(this, RouteActivity.class);
+            startActivity(i);
+        }
+        else{
+            Toast.makeText(this, "Please fill in the correct name of the station", Toast.LENGTH_SHORT).show();
+        }
     }
 
     protected void changeLanguageToEnglishOnClick(View view){
         Toast.makeText(this, "English", Toast.LENGTH_SHORT).show();
+    }
+
+    private boolean checkIfInputIsCorrect(String station){
+        for(int i = 0;i<stationList.size();i++){
+            if(station.equals(stationList.get(i))){
+                return true;
+            }
+        }
+        return false;
     }
 
 }

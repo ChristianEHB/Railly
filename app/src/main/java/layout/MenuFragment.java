@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 
 import com.example.naits.railly.R;
 
-public class LanguageFragment extends Fragment {
+public class MenuFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState){

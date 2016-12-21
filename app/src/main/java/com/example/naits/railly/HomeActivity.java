@@ -118,7 +118,13 @@ public class HomeActivity extends AppCompatActivity implements DatePickerDialog.
 
     @Override
     public void onTimeSet(TimePicker view, int hour, int min) {
-        String newTime = String.format("%d:%d", hour, min);
+        String newTime = null;
+        if(min < 10){
+            newTime = String.format("%d:0%d", hour, min);
+        }
+        else{
+            newTime = String.format("%d:%d", hour, min);
+        }
         textViewHour.setText(newTime);
     }
 

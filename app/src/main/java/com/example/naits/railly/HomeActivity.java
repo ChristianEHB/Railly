@@ -4,6 +4,7 @@ import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
+import android.icu.text.DateFormat;
 import android.icu.util.Calendar;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
@@ -28,7 +29,6 @@ public class HomeActivity extends AppCompatActivity implements DatePickerDialog.
     private TextView textViewDate, textViewHour;
 
 
-
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,18 +48,6 @@ public class HomeActivity extends AppCompatActivity implements DatePickerDialog.
     }
 
 
-    protected void searchOnClick(View view){
-        Intent i = new Intent(this, RouteActivity.class);
-        startActivity(i);
-    }
-    protected void changeLanguageToEnglishOnClick(View view){
-        Toast.makeText(this, "English", Toast.LENGTH_SHORT).show();
-    }
-
-
-
-
-
 
     private void autoCompleteRoutePlanner(){
         // Get the string array
@@ -76,8 +64,6 @@ public class HomeActivity extends AppCompatActivity implements DatePickerDialog.
         textViewDeparture.setAdapter(locationsAdapter);
     }
 
-
-
     @RequiresApi(api = Build.VERSION_CODES.N)
     private void setCurrentTime(){
         textViewDate = (TextView) findViewById(R.id.textViewDate);
@@ -90,9 +76,9 @@ public class HomeActivity extends AppCompatActivity implements DatePickerDialog.
     private String setCurrentDate(){
         Calendar calendar = Calendar.getInstance();
         year = calendar.get(Calendar.YEAR);
-        month = calendar.get(Calendar.MONTH) + 1;
+        month = calendar.get(Calendar.MONTH);
         day = calendar.get(Calendar.DAY_OF_MONTH);
-        return String.format("%d/%d/%d",day, month, year);
+        return String.format("%d/%d/%d",day, month + 1, year);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -107,22 +93,51 @@ public class HomeActivity extends AppCompatActivity implements DatePickerDialog.
         return String.format("%d:%d", hour, min);
     }
 
+    @Override
+    public void onDateSet(DatePicker view, int year, int month, int day) {
+        String newDate = null;
+        if(day < 10 && month < 10){
+            newDate = String.format("0%d/0%d/%d", day, month + 1, year);
+        }
+        else if(day < 10 && month > 10){
+            newDate = String.format("0%d/%d/%d", day, month + 1, year);
+        }
+        else if(day > 10 && month < 10){
+            newDate = String.format("%d/0%d/%d", day, month + 1, year);
+        }
+        else{
+            newDate = String.format("%d/%d/%d", day, month + 1, year);
+        }
+        textViewDate.setText(newDate);
+    }
+
+    @Override
+    public void onTimeSet(TimePicker view, int hour, int min) {
+        String newTime = String.format("%d:%d", hour, min);
+        textViewHour.setText(newTime);
+    }
+
+
+    // Button Clicks
+
+    protected void goToTimePickerOnClick(View view){
+        TimePickerDialog timePickerDialog = new TimePickerDialog(HomeActivity.this, HomeActivity.this, hour, min, android.text.format.DateFormat.is24HourFormat(this));
+        timePickerDialog.show();
+    }
+
     @RequiresApi(api = Build.VERSION_CODES.N)
     protected void goToDatePickerOnClick(View view){
         DatePickerDialog datePickerDialog = new DatePickerDialog(HomeActivity.this, HomeActivity.this, year, month, day);
         datePickerDialog.show();
-
     }
 
-
-
-    @Override
-    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-
+    protected void searchOnClick(View view){
+        Intent i = new Intent(this, RouteActivity.class);
+        startActivity(i);
     }
 
-    @Override
-    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-
+    protected void changeLanguageToEnglishOnClick(View view){
+        Toast.makeText(this, "English", Toast.LENGTH_SHORT).show();
     }
+
 }

@@ -1,6 +1,8 @@
 package com.example.naits.railly;
 
+import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
+import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.icu.util.Calendar;
 import android.os.Build;
@@ -10,11 +12,22 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.DatePicker;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
-public class HomeActivity extends AppCompatActivity {
+public class HomeActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener{
+
+    private int hour, min;
+    private int year, month, day;
+    private  AutoCompleteTextView textViewArrival, textViewDeparture;
+    private ArrayAdapter<String> locationsAdapter;
+    private TextView textViewDate, textViewHour;
+
+
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
@@ -32,8 +45,6 @@ public class HomeActivity extends AppCompatActivity {
 
 
 
-
-
     }
 
 
@@ -45,10 +56,6 @@ public class HomeActivity extends AppCompatActivity {
         Toast.makeText(this, "English", Toast.LENGTH_SHORT).show();
     }
 
-    protected void goToDatePickerOnClick(View view){
-        Intent i = new Intent(this, DatePickerActivity.class);
-        startActivity(i);
-    }
 
 
 
@@ -59,41 +66,40 @@ public class HomeActivity extends AppCompatActivity {
         String[] stations = getResources().getStringArray(R.array.stations);
 
         // Create the adapter and set it to the AutoCompleteTextView
-        AutoCompleteTextView textViewArrival = (AutoCompleteTextView) findViewById(R.id.autocomplete_arrival);
-        AutoCompleteTextView textView = (AutoCompleteTextView) findViewById(R.id.autocomplete_departure);
+        textViewArrival = (AutoCompleteTextView) findViewById(R.id.autocomplete_arrival);
+        textViewDeparture = (AutoCompleteTextView) findViewById(R.id.autocomplete_departure);
 
-        ArrayAdapter<String> adapterArrival = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, stations);
-        ArrayAdapter<String> adapterDeparture = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, stations);
+        locationsAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, stations);
 
         // Create the adapter and set it to the AutoCompleteTextView
-        textViewArrival.setAdapter(adapterArrival);
-        textView.setAdapter(adapterDeparture);
+        textViewArrival.setAdapter(locationsAdapter);
+        textViewDeparture.setAdapter(locationsAdapter);
     }
 
 
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     private void setCurrentTime(){
-        TextView textViewDate = (TextView) findViewById(R.id.textViewDate);
+        textViewDate = (TextView) findViewById(R.id.textViewDate);
         textViewDate.setText(setCurrentDate());
-        TextView textViewHour = (TextView) findViewById(R.id.textViewHour);
+        textViewHour = (TextView) findViewById(R.id.textViewHour);
         textViewHour.setText(setCurrentHour());
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     private String setCurrentDate(){
         Calendar calendar = Calendar.getInstance();
-        int year = calendar.get(Calendar.YEAR);
-        int month = calendar.get(Calendar.MONTH);
-        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        year = calendar.get(Calendar.YEAR);
+        month = calendar.get(Calendar.MONTH) + 1;
+        day = calendar.get(Calendar.DAY_OF_MONTH);
         return String.format("%d/%d/%d",day, month, year);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     private String setCurrentHour(){
         Calendar calendar = Calendar.getInstance();
-        int hour = calendar.get(Calendar.HOUR);
-        int min = calendar.get(Calendar.MINUTE);
+        hour = calendar.get(Calendar.HOUR);
+        min = calendar.get(Calendar.MINUTE);
         int AMorPM = calendar.get(Calendar.AM_PM);
         if(AMorPM == 1){
             hour += 12;
@@ -101,4 +107,22 @@ public class HomeActivity extends AppCompatActivity {
         return String.format("%d:%d", hour, min);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    protected void goToDatePickerOnClick(View view){
+        DatePickerDialog datePickerDialog = new DatePickerDialog(HomeActivity.this, HomeActivity.this, year, month, day);
+        datePickerDialog.show();
+
+    }
+
+
+
+    @Override
+    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+
+    }
+
+    @Override
+    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+
+    }
 }

@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AutoCompleteTextView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
@@ -18,16 +19,20 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import Api.HttpHandler;
 
 public class StationActivity extends AppCompatActivity {
 
+    private AutoCompleteTextView autoCompleteTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_station);
+
+
 
     }
 
@@ -43,5 +48,12 @@ public class StationActivity extends AppCompatActivity {
     protected void goToStationScreen(View view){
         Intent i = new Intent(this, StationActivity.class);
         startActivity(i);
+    }
+
+    protected void searchStationOnClick(View v){
+        Intent i = new Intent(this, LiveBoardsActivity.class);
+        startActivity(i);
+
+
     }
 }

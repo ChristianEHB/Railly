@@ -44,7 +44,6 @@ public class RouteListAdapter extends BaseAdapter {
         TextView arrivalTextView = (TextView)v.findViewById(R.id.route_item_arrival);
         departureTextView.setText(routeList.get(position).getDeparture());
         arrivalTextView.setText(routeList.get(position).getArrival());
-        v.setTag(routeList.get(position).getId());
         return v;
     }
 }

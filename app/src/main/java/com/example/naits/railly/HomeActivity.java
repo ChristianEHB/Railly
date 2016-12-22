@@ -40,14 +40,13 @@ public class HomeActivity extends AppCompatActivity implements DatePickerDialog.
         //Ik heb deze code toegevoegd om te testen of ik kan pushen -Ruben
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        stationList = Arrays.asList(getResources().getStringArray(R.array.stations));
 
         // Set TextView To Current Time
         setCurrentTime();
 
         // Autocomplete for editTextFields
+        stationList = Arrays.asList(getResources().getStringArray(R.array.stations));
         autoCompleteRoutePlanner();
-
 
 
     }

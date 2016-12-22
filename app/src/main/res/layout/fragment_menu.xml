@@ -17,7 +17,8 @@
             android:text="@string/route"
             android:textSize="16sp"
             android:layout_marginLeft="2dp"
-            android:onClick="goToRouteScreen"/>
+            android:onClick="goToRouteScreen"
+            android:textStyle="bold"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -25,6 +26,7 @@
             android:textSize="16sp"
             android:layout_marginLeft="77dp"
             android:onClick="goToStationScreen"
+            android:textStyle="bold"
             />
         <TextView
             android:layout_width="wrap_content"
@@ -32,6 +34,7 @@
             android:text="Extra"
             android:textSize="16sp"
             android:layout_marginLeft="75dp"
+            android:textStyle="bold"
             />
     </LinearLayout>
 

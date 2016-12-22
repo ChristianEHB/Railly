@@ -32,7 +32,8 @@
         android:textAlignment="center"
         android:textSize="18dp"
         android:paddingTop="12dp"
-        android:textColor="#009933"
+        android:textColor="@color/colorPrimary"
+        android:textStyle="bold"
         />
     <Button
         android:text="@string/button_search"
@@ -47,6 +48,7 @@
         android:textColor="#ffffff"
         android:layout_marginBottom="15dp"
         android:onClick="searchStationOnClick"
+        android:textStyle="bold"
         />
 
     <fragment

@@ -161,7 +161,8 @@ public class HomeActivity extends AppCompatActivity implements DatePickerDialog.
     }
 
     protected void changeLanguageToEnglishOnClick(View view){
-        Toast.makeText(this, "English", Toast.LENGTH_SHORT).show();
+        Intent i = new Intent(this, StationActivity.class);
+        startActivity(i);
     }
 
     private boolean checkIfInputIsCorrect(String station){

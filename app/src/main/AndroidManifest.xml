@@ -18,6 +18,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".RouteActivity" />
+        <activity android:name=".LiveBoardsActivity" />
+        <activity android:name=".StationActivity"></activity>
     </application>
 
 </manifest>

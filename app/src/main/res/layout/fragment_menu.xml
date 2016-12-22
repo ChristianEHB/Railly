@@ -14,20 +14,22 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Home"
+            android:text="@string/route"
             android:textSize="16sp"
-            android:onClick="changeLanguageToEnglishOnClick"/>
+            android:layout_marginLeft="2dp"
+            android:onClick="goToRouteScreen"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Route"
+            android:text="@string/station"
             android:textSize="16sp"
-            android:layout_marginLeft="75dp"
+            android:layout_marginLeft="77dp"
+            android:onClick="goToStationScreen"
             />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Station"
+            android:text="Extra"
             android:textSize="16sp"
             android:layout_marginLeft="75dp"
             />

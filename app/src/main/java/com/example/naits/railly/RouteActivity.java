@@ -1,6 +1,7 @@
 package com.example.naits.railly;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.nfc.Tag;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -83,5 +84,17 @@ public class RouteActivity extends AppCompatActivity {
         String year = date.substring(6,7);
         return "https://api.irail.be/connections/?to=Aalst&from=Londerzeel&date=201216&time=1930&timeSel=arrive&format=json";
         //return String.format("https://api.irail.be/connections/?to=%s&from=%s&date=%s%s%s&time=%s%s&timeSel=arrive",departure,arrival,day,month,year,hour,min);
+    }
+
+    // Button Clicks
+
+    protected void goToRouteScreen(View view){
+        Intent i = new Intent(this, HomeActivity.class);
+        startActivity(i);
+    }
+
+    protected void goToStationScreen(View view){
+        Intent i = new Intent(this, StationActivity.class);
+        startActivity(i);
     }
 }

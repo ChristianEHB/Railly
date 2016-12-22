@@ -54,6 +54,8 @@ public class HomeActivity extends AppCompatActivity implements DatePickerDialog.
 
 
 
+
+
     private void autoCompleteRoutePlanner(){
         // Get the string array
         String[] stations = getResources().getStringArray(R.array.stations);
@@ -88,6 +90,7 @@ public class HomeActivity extends AppCompatActivity implements DatePickerDialog.
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     private String setCurrentHour(){
+        String newTime = null;
         Calendar calendar = Calendar.getInstance();
         hour = calendar.get(Calendar.HOUR);
         min = calendar.get(Calendar.MINUTE);
@@ -95,7 +98,13 @@ public class HomeActivity extends AppCompatActivity implements DatePickerDialog.
         if(AMorPM == 1){
             hour += 12;
         }
-        return String.format("%d:%d", hour, min);
+        if(min < 10){
+            newTime = String.format("%d:0%d", hour, min);
+        }
+        else{
+            newTime = String.format("%d:%d", hour, min);
+        }
+        return newTime;
     }
 
     @Override
@@ -131,6 +140,16 @@ public class HomeActivity extends AppCompatActivity implements DatePickerDialog.
 
     // Button Clicks
 
+    protected void goToRouteScreen(View view){
+        Intent i = new Intent(this, HomeActivity.class);
+        startActivity(i);
+    }
+
+    protected void goToStationScreen(View view){
+        Intent i = new Intent(this, StationActivity.class);
+        startActivity(i);
+    }
+
     protected void goToTimePickerOnClick(View view){
         TimePickerDialog timePickerDialog = new TimePickerDialog(HomeActivity.this, HomeActivity.this, hour, min, android.text.format.DateFormat.is24HourFormat(this));
         timePickerDialog.show();
@@ -160,10 +179,6 @@ public class HomeActivity extends AppCompatActivity implements DatePickerDialog.
         }
     }
 
-    protected void changeLanguageToEnglishOnClick(View view){
-        Intent i = new Intent(this, StationActivity.class);
-        startActivity(i);
-    }
 
     private boolean checkIfInputIsCorrect(String station){
         for(int i = 0;i<stationList.size();i++){

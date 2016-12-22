@@ -86,6 +86,7 @@ public class RouteActivity extends AppCompatActivity {
         //return String.format("https://api.irail.be/connections/?to=%s&from=%s&date=%s%s%s&time=%s%s&timeSel=arrive",departure,arrival,day,month,year,hour,min);
     }
 
+
     // Button Clicks
 
     protected void goToRouteScreen(View view){

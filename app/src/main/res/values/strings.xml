@@ -660,13 +660,12 @@
         <item>Michelau</item>
     </string-array>
 
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="Routeplanner_fragment">Routeplanner</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="routes">Routes</string>
     <string name="route">Route</string>
     <string name="station">Station</string>
     <string name="routeplanner">Routeplanner</string>
+    <string name="live_board">Live Board</string>
+    <string name="description">Search a station for which you want to see the live board</string>
 </resources>

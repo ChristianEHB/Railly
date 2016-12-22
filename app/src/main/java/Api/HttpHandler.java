@@ -1,6 +1,10 @@
 package Api;
 
+import android.os.AsyncTask;
 import android.util.Log;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
@@ -17,11 +21,29 @@ import java.net.URL;
  * code from http://www.androidhive.info/2012/01/android-json-parsing-tutorial/
  */
 
-public class HttpHandler {
+public class HttpHandler extends AsyncTask<String, Integer, JSONObject>{
 
     private static final String TAG = HttpHandler.class.getSimpleName();
 
     public HttpHandler() {
+    }
+
+    @Override
+    protected void onPostExecute(JSONObject jsonObject) {
+        super.onPostExecute(jsonObject);
+    }
+
+    @Override
+    protected JSONObject doInBackground(String... param) {
+        JSONObject response = null;
+        try {
+            response  = getJSONObjectFromURL(param[0]);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return response;
     }
 
     public String makeServiceCall(String reqUrl) {
@@ -64,5 +86,41 @@ public class HttpHandler {
             }
         }
         return sb.toString();
+    }
+
+    public static JSONObject getJSONObjectFromURL(String urlString) throws IOException, JSONException, JSONException {
+
+        HttpURLConnection urlConnection = null;
+
+        URL url = new URL(urlString);
+
+        urlConnection = (HttpURLConnection) url.openConnection();
+
+        urlConnection.setRequestMethod("GET");
+        urlConnection.setReadTimeout(10000 /* milliseconds */);
+        urlConnection.setConnectTimeout(15000 /* milliseconds */);
+
+        urlConnection.setDoOutput(true);
+
+        urlConnection.connect();
+
+        BufferedReader br=new BufferedReader(new InputStreamReader(url.openStream()));
+
+        char[] buffer = new char[1024];
+
+        String jsonString = new String();
+
+        StringBuilder sb = new StringBuilder();
+        String line;
+        while ((line = br.readLine()) != null) {
+            sb.append(line+"\n");
+        }
+        br.close();
+
+        jsonString = sb.toString();
+
+        Log.d("JSON", "JSON: " + jsonString);
+
+        return new JSONObject(jsonString);
     }
 }

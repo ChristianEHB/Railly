@@ -1,8 +1,10 @@
 package com.example.naits.railly;
 
 import android.app.ProgressDialog;
+import android.nfc.Tag;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -11,11 +13,17 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
+import Api.HttpHandler;
+
 public class RouteActivity extends AppCompatActivity {
 
     private ListView lvRoute;
     private RouteListAdapter adapter;
     private List<Route> routeList;
+    private HttpHandler handler;
+
+
+    private String arrival, departure, date, hour;
 
 
 
@@ -28,6 +36,14 @@ public class RouteActivity extends AppCompatActivity {
         lvRoute = (ListView)findViewById(R.id.listView_routes);
 
         routeList = new ArrayList<>();
+
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            arrival = extras.getString("arrival").toString();
+            departure = extras.getString("departure").toString();
+            date = extras.getString("date").toString();
+            hour = extras.getString("hour").toString();
+        }
 
         // add data from api here
 
@@ -49,6 +65,12 @@ public class RouteActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "Clicked on route = " + view.getTag(),Toast.LENGTH_LONG).show();
             }
         });
+
+        handler = new HttpHandler();
+        Log.d("test" , setUrl(departure, arrival, hour, date));
+        //Log.d("http req", "onCreate: " + handler.makeServiceCall(setUrl(departure, arrival, hour, date)));
+
+        Log.d("JSON",handler.execute(setUrl(departure, arrival, hour, date)).toString());
     }
 
 
@@ -59,7 +81,7 @@ public class RouteActivity extends AppCompatActivity {
         String day = date.substring(0,1);
         String month = date.substring(3,4);
         String year = date.substring(6,7);
-        // example: "https://api.irail.be/connections/?to=Aalst&from=Londerzeel&date=201216&time=1930&timeSel=arrive"
-        return String.format("https://api.irail.be/connections/?to=%s&from=%s&date=%s%s%s&time=%s%s&timeSel=arrive",departure,arrival,day,month,year,hour,min);
+        return "https://api.irail.be/connections/?to=Aalst&from=Londerzeel&date=201216&time=1930&timeSel=arrive&format=json";
+        //return String.format("https://api.irail.be/connections/?to=%s&from=%s&date=%s%s%s&time=%s%s&timeSel=arrive",departure,arrival,day,month,year,hour,min);
     }
 }

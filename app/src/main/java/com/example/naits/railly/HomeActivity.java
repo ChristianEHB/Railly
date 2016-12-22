@@ -145,6 +145,14 @@ public class HomeActivity extends AppCompatActivity implements DatePickerDialog.
     protected void searchOnClick(View view){
         if(checkIfInputIsCorrect(textViewDeparture.getText().toString()) == true && checkIfInputIsCorrect(textViewArrival.getText().toString()) == true ){
             Intent i = new Intent(this, RouteActivity.class);
+            /*
+            Info doorgeven aan volgende activity
+             */
+            i.putExtra("departure", textViewDeparture.getText().toString());
+            i.putExtra("arrival", textViewArrival.getText().toString());
+            i.putExtra("date",textViewDate.getText().toString());
+            i.putExtra("hour", textViewHour.getText().toString());
+
             startActivity(i);
         }
         else{

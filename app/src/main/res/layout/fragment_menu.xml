@@ -2,11 +2,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="layout.LanguageFragment"
+    tools:context="layout.MenuFragment"
     android:background="#ffffff"
     android:minWidth="350dp">
 
-    <!-- TODO: Update blank fragment layout -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -15,19 +14,20 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="English"
-            android:textSize="16sp"/>
+            android:text="Home"
+            android:textSize="16sp"
+            android:onClick="changeLanguageToEnglishOnClick"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Dutch"
+            android:text="Route"
             android:textSize="16sp"
             android:layout_marginLeft="75dp"
             />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="French"
+            android:text="About"
             android:textSize="16sp"
             android:layout_marginLeft="75dp"
             />

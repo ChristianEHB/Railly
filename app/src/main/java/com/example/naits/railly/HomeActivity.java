@@ -109,17 +109,24 @@ public class HomeActivity extends AppCompatActivity implements DatePickerDialog.
     @Override
     public void onDateSet(DatePicker view, int year, int month, int day) {
         String newDate = null;
+        month++;
         if(day < 10 && month < 10){
-            newDate = String.format("0%d/0%d/%d", day, month + 1, year);
+            newDate = String.format("0%d/0%d/%d", day, month, year);
+        }
+        else if(day == 10 && month < 10){
+            newDate = String.format("%d/0%d/%d", day, month, year);
+        }
+        else if(day < 10 && month == 10){
+            newDate = String.format("0%d/%d/%d", day, month, year);
         }
         else if(day < 10 && month > 10){
-            newDate = String.format("0%d/%d/%d", day, month + 1, year);
+            newDate = String.format("0%d/%d/%d", day, month, year);
         }
         else if(day > 10 && month < 10){
-            newDate = String.format("%d/0%d/%d", day, month + 1, year);
+            newDate = String.format("%d/0%d/%d", day, month, year);
         }
         else{
-            newDate = String.format("%d/%d/%d", day, month + 1, year);
+            newDate = String.format("%d/%d/%d", day, month, year);
         }
         textViewDate.setText(newDate);
     }
@@ -160,8 +167,11 @@ public class HomeActivity extends AppCompatActivity implements DatePickerDialog.
         datePickerDialog.show();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     protected void searchOnClick(View view){
-        if(checkIfInputIsCorrect(textViewDeparture.getText().toString()) == true && checkIfInputIsCorrect(textViewArrival.getText().toString()) == true ){
+        if(checkIfInputIsCorrect(textViewDeparture.getText().toString()) == true && checkIfInputIsCorrect(textViewArrival.getText().toString()) == true
+                && checkIfDateIsCorrect(textViewHour.getText().toString(), textViewDate.getText().toString()) == true){
+
             Intent i = new Intent(this, RouteActivity.class);
             /*
             Info doorgeven aan volgende activity
@@ -173,8 +183,12 @@ public class HomeActivity extends AppCompatActivity implements DatePickerDialog.
 
             startActivity(i);
         }
-        else{
-            Toast.makeText(this, "Please fill in the correct name of the station", Toast.LENGTH_SHORT).show();
+        else {
+            if (checkIfDateIsCorrect(textViewHour.getText().toString(), textViewDate.getText().toString()) == false) {
+                Toast.makeText(this, "Please fill in a correct time", Toast.LENGTH_LONG).show();
+            } else {
+                Toast.makeText(this, "Please fill in the correct name of the station", Toast.LENGTH_LONG).show();
+            }
         }
     }
 
@@ -186,6 +200,53 @@ public class HomeActivity extends AppCompatActivity implements DatePickerDialog.
             }
         }
         return false;
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    private boolean checkIfDateIsCorrect(String time, String date){
+        Calendar calendar = Calendar.getInstance();
+        int currentDay = calendar.get(Calendar.DAY_OF_MONTH);
+        int currentMonth = calendar.get(Calendar.MONTH) + 1;
+        int currentYear = calendar.get(Calendar.YEAR);
+
+        int currentHour = calendar.get(Calendar.HOUR);
+        int currentMinute = calendar.get(Calendar.MINUTE);
+
+
+        int day = HelpMethods.getDayFromString(date);
+        int month = HelpMethods.getMonthFromString(date);
+        int year = HelpMethods.getYearFromString(date);
+
+        int hour = HelpMethods.getHourFromString(time);
+        int minute = HelpMethods.getMinuteFromString(time);
+
+
+        if(year < currentYear){
+            return false;
+            // 2015 < 2016
+        }
+
+        if(year == currentYear && month < currentMonth){
+            return false;
+            // 2016 == 2016 && november < december
+        }
+
+        if(month == currentMonth && day < currentDay){
+            return false;
+            // december == december && 21 < 23
+        }
+
+        if(day == currentDay && hour < currentHour){
+            return false;
+            // 23 == 23 && 15 < 16
+        }
+
+        if(hour == currentHour && minute < currentMinute){
+            return false;
+            // 16 == 16 && 30 < 50
+        }
+
+        return true;
     }
 
 }

@@ -58,18 +58,17 @@ public class LiveBoardListAdapter extends BaseAdapter{
         if (!isCanceled.equals("0")) {
             canceled.setTextColor(Color.RED);
             canceled.setText("Canceled");
+            delay.setText("");
         }
-
-
-        String isOnTime = routeList.get(position).getDelay();
-        if(isOnTime.equals("0")){
-            delay.setText("On time");
+        else {
+            String isOnTime = routeList.get(position).getDelay();
+            if (isOnTime.equals("0")) {
+                delay.setText("On time");
+            } else {
+                delay.setTextColor(Color.RED);
+                delay.setText(routeList.get(position).getDelay() + " min");
+            }
         }
-        else{
-            delay.setTextColor(Color.RED);
-            delay.setText(routeList.get(position).getDelay() + " min");
-        }
-
         return v;
     }
 }

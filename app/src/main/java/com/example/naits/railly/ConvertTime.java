@@ -12,6 +12,63 @@ public class ConvertTime {
 
     }
 
+
+    public static int setTo24Hour(int hour, int AMorPM){
+        if(AMorPM == 1){
+            hour += 12;
+        }
+        return hour;
+    }
+
+    public static String setCurrentHour(){
+        Calendar calendar = Calendar.getInstance();
+        int hour = calendar.get(Calendar.HOUR);
+        int min = calendar.get(Calendar.MINUTE);
+        int AMorPM = calendar.get(Calendar.AM_PM);
+        hour = setTo24Hour(hour, AMorPM);
+        return formatTime(hour, min);
+    }
+
+    public static String setCurrentDate(){
+        Calendar calendar = Calendar.getInstance();
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH);
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        return formatDate(year,month,day);
+    }
+
+    public static String formatDate(int year, int month, int day){
+        month++;
+        if(day < 10 && month < 10){
+            return String.format("0%d/0%d/%d", day, month, year);
+        }
+        else if(day == 10 && month < 10){
+            return String.format("%d/0%d/%d", day, month, year);
+        }
+        else if(day < 10 && month == 10){
+            return String.format("0%d/%d/%d", day, month, year);
+        }
+        else if(day < 10 && month > 10){
+            return String.format("0%d/%d/%d", day, month, year);
+        }
+        else if(day > 10 && month < 10){
+            return String.format("%d/0%d/%d", day, month, year);
+        }
+        else{
+            return String.format("%d/%d/%d", day, month, year);
+        }
+    }
+
+
+    public static String formatTime(int hour, int minute){
+        if(minute < 10){
+            return String.format("%d:0%d", hour, minute);
+        }
+        else{
+            return String.format("%d:%d", hour, minute);
+        }
+    }
+
     public static int getDayFromString(String date){
         int day = 0;
 

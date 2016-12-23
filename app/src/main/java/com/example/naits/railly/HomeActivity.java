@@ -19,6 +19,12 @@ import android.widget.Toast;
 import java.util.Arrays;
 import java.util.List;
 
+import static com.example.naits.railly.ConvertTime.formatDate;
+import static com.example.naits.railly.ConvertTime.formatTime;
+import static com.example.naits.railly.ConvertTime.setTo24Hour;
+import static com.example.naits.railly.HelpMethods.checkIfDateIsCorrect;
+import static com.example.naits.railly.HelpMethods.checkIfInputIsCorrect;
+
 public class HomeActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener{
 
     private int hour, min;
@@ -73,69 +79,36 @@ public class HomeActivity extends AppCompatActivity implements DatePickerDialog.
         textViewHour.setText(setCurrentHour());
     }
 
+
     @RequiresApi(api = Build.VERSION_CODES.N)
     private String setCurrentDate(){
         Calendar calendar = Calendar.getInstance();
         year = calendar.get(Calendar.YEAR);
         month = calendar.get(Calendar.MONTH);
         day = calendar.get(Calendar.DAY_OF_MONTH);
-        return String.format("%d/%d/%d",day, month + 1, year);
+        return formatDate(year,month,day);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     private String setCurrentHour(){
-        String newTime = null;
         Calendar calendar = Calendar.getInstance();
         hour = calendar.get(Calendar.HOUR);
         min = calendar.get(Calendar.MINUTE);
         int AMorPM = calendar.get(Calendar.AM_PM);
-        if(AMorPM == 1){
-            hour += 12;
-        }
-        if(min < 10){
-            newTime = String.format("%d:0%d", hour, min);
-        }
-        else{
-            newTime = String.format("%d:%d", hour, min);
-        }
-        return newTime;
+        hour = setTo24Hour(hour, AMorPM);
+        return formatTime(hour, min);
     }
+
+
 
     @Override
     public void onDateSet(DatePicker view, int year, int month, int day) {
-        String newDate = null;
-        month++;
-        if(day < 10 && month < 10){
-            newDate = String.format("0%d/0%d/%d", day, month, year);
-        }
-        else if(day == 10 && month < 10){
-            newDate = String.format("%d/0%d/%d", day, month, year);
-        }
-        else if(day < 10 && month == 10){
-            newDate = String.format("0%d/%d/%d", day, month, year);
-        }
-        else if(day < 10 && month > 10){
-            newDate = String.format("0%d/%d/%d", day, month, year);
-        }
-        else if(day > 10 && month < 10){
-            newDate = String.format("%d/0%d/%d", day, month, year);
-        }
-        else{
-            newDate = String.format("%d/%d/%d", day, month, year);
-        }
-        textViewDate.setText(newDate);
+        textViewDate.setText(formatDate(year,month,day));
     }
 
     @Override
     public void onTimeSet(TimePicker view, int hour, int min) {
-        String newTime = null;
-        if(min < 10){
-            newTime = String.format("%d:0%d", hour, min);
-        }
-        else{
-            newTime = String.format("%d:%d", hour, min);
-        }
-        textViewHour.setText(newTime);
+        textViewHour.setText(formatTime(hour,min));
     }
 
 
@@ -164,7 +137,8 @@ public class HomeActivity extends AppCompatActivity implements DatePickerDialog.
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     protected void searchOnClick(View view){
-        if(checkIfInputIsCorrect(textViewDeparture.getText().toString()) == true && checkIfInputIsCorrect(textViewArrival.getText().toString()) == true
+        if(checkIfInputIsCorrect(textViewDeparture.getText().toString(), stationList) == true
+                && checkIfInputIsCorrect(textViewArrival.getText().toString(), stationList) == true
                 && checkIfDateIsCorrect(textViewHour.getText().toString(), textViewDate.getText().toString()) == true){
 
             Intent i = new Intent(this, RouteActivity.class);
@@ -186,67 +160,4 @@ public class HomeActivity extends AppCompatActivity implements DatePickerDialog.
             }
         }
     }
-
-
-    private boolean checkIfInputIsCorrect(String station){
-        for(int i = 0;i<stationList.size();i++){
-            if(station.equals(stationList.get(i))){
-                return true;
-            }
-        }
-        return false;
-    }
-
-    @RequiresApi(api = Build.VERSION_CODES.N)
-    private boolean checkIfDateIsCorrect(String time, String date){
-        Calendar calendar = Calendar.getInstance();
-        int currentDay = calendar.get(Calendar.DAY_OF_MONTH);
-        int currentMonth = calendar.get(Calendar.MONTH) + 1;
-        int currentYear = calendar.get(Calendar.YEAR);
-
-        int AMorPM = calendar.get(Calendar.AM_PM);
-        int currentHour = calendar.get(Calendar.HOUR);
-        int currentMinute = calendar.get(Calendar.MINUTE);
-
-        if(AMorPM == 1){
-            currentHour += 12;
-        }
-
-
-        int day = ConvertTime.getDayFromString(date);
-        int month = ConvertTime.getMonthFromString(date);
-        int year = ConvertTime.getYearFromString(date);
-
-        int hour = ConvertTime.getHourFromString(time);
-        int minute = ConvertTime.getMinuteFromString(time);
-
-
-        if(year < currentYear){
-            return false;
-            // 2015 < 2016
-        }
-
-        if(year == currentYear && month < currentMonth){
-            return false;
-            // 2016 == 2016 && november < december
-        }
-
-        if(month == currentMonth && day < currentDay){
-            return false;
-            // december == december && 21 < 23
-        }
-
-        if(day == currentDay && hour < currentHour){
-            return false;
-            // 23 == 23 && 15 < 16
-        }
-
-        if(hour == currentHour && minute < currentMinute){
-            return false;
-            // 16 == 16 && 30 < 50
-        }
-
-        return true;
-    }
-
 }

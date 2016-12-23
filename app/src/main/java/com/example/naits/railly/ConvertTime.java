@@ -13,6 +13,9 @@ public class ConvertTime {
     }
 
 
+    // Methods for the time
+
+
     public static int setTo24Hour(int hour, int AMorPM){
         if(AMorPM == 1){
             hour += 12;

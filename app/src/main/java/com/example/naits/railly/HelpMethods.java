@@ -9,6 +9,8 @@ import java.util.List;
 
 public class HelpMethods {
 
+    // Help methods
+
     public static boolean checkIfInputIsCorrect(String station, List<String> stationList){
         for(int i = 0;i<stationList.size();i++){
             if(station.equals(stationList.get(i))){

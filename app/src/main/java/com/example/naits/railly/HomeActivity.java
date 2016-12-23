@@ -38,7 +38,6 @@ public class HomeActivity extends AppCompatActivity implements DatePickerDialog.
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        //Ik heb deze code toegevoegd om te testen of ik kan pushen -Ruben
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
@@ -49,57 +48,10 @@ public class HomeActivity extends AppCompatActivity implements DatePickerDialog.
         stationList = Arrays.asList(getResources().getStringArray(R.array.stations));
         autoCompleteRoutePlanner();
 
-
     }
 
 
-
-
-
-    private void autoCompleteRoutePlanner(){
-        // Get the string array
-        String[] stations = getResources().getStringArray(R.array.stations);
-
-        // Create the adapter and set it to the AutoCompleteTextView
-        textViewArrival = (AutoCompleteTextView) findViewById(R.id.autocomplete_arrival);
-        textViewDeparture = (AutoCompleteTextView) findViewById(R.id.autocomplete_departure);
-
-        locationsAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, stations);
-
-        // Create the adapter and set it to the AutoCompleteTextView
-        textViewArrival.setAdapter(locationsAdapter);
-        textViewDeparture.setAdapter(locationsAdapter);
-    }
-
-    @RequiresApi(api = Build.VERSION_CODES.N)
-    private void setCurrentTime(){
-        textViewDate = (TextView) findViewById(R.id.textViewDate);
-        textViewDate.setText(setCurrentDate());
-        textViewHour = (TextView) findViewById(R.id.textViewHour);
-        textViewHour.setText(setCurrentHour());
-    }
-
-
-    @RequiresApi(api = Build.VERSION_CODES.N)
-    private String setCurrentDate(){
-        Calendar calendar = Calendar.getInstance();
-        year = calendar.get(Calendar.YEAR);
-        month = calendar.get(Calendar.MONTH);
-        day = calendar.get(Calendar.DAY_OF_MONTH);
-        return formatDate(year,month,day);
-    }
-
-    @RequiresApi(api = Build.VERSION_CODES.N)
-    private String setCurrentHour(){
-        Calendar calendar = Calendar.getInstance();
-        hour = calendar.get(Calendar.HOUR);
-        min = calendar.get(Calendar.MINUTE);
-        int AMorPM = calendar.get(Calendar.AM_PM);
-        hour = setTo24Hour(hour, AMorPM);
-        return formatTime(hour, min);
-    }
-
-
+    // Changing The Time
 
     @Override
     public void onDateSet(DatePicker view, int year, int month, int day) {
@@ -159,5 +111,50 @@ public class HomeActivity extends AppCompatActivity implements DatePickerDialog.
                 Toast.makeText(this, "Please fill in the correct name of the station", Toast.LENGTH_LONG).show();
             }
         }
+    }
+
+
+    // Methods that run when the Activity starts
+
+    private void autoCompleteRoutePlanner(){
+        // Get the string array
+        String[] stations = getResources().getStringArray(R.array.stations);
+
+        // Create the adapter and set it to the AutoCompleteTextView
+        textViewArrival = (AutoCompleteTextView) findViewById(R.id.autocomplete_arrival);
+        textViewDeparture = (AutoCompleteTextView) findViewById(R.id.autocomplete_departure);
+
+        locationsAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, stations);
+
+        // Create the adapter and set it to the AutoCompleteTextView
+        textViewArrival.setAdapter(locationsAdapter);
+        textViewDeparture.setAdapter(locationsAdapter);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    private void setCurrentTime(){
+        textViewDate = (TextView) findViewById(R.id.textViewDate);
+        textViewDate.setText(setCurrentDate());
+        textViewHour = (TextView) findViewById(R.id.textViewHour);
+        textViewHour.setText(setCurrentHour());
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    private String setCurrentDate(){
+        Calendar calendar = Calendar.getInstance();
+        year = calendar.get(Calendar.YEAR);
+        month = calendar.get(Calendar.MONTH);
+        day = calendar.get(Calendar.DAY_OF_MONTH);
+        return formatDate(year,month,day);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    private String setCurrentHour(){
+        Calendar calendar = Calendar.getInstance();
+        hour = calendar.get(Calendar.HOUR);
+        min = calendar.get(Calendar.MINUTE);
+        int AMorPM = calendar.get(Calendar.AM_PM);
+        hour = setTo24Hour(hour, AMorPM);
+        return formatTime(hour, min);
     }
 }

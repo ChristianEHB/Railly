@@ -6,9 +6,9 @@ import java.util.Calendar;
  * Created by naits on 23/12/2016.
  */
 
-public class HelpMethods {
+public class ConvertTime {
 
-    public HelpMethods(){
+    public ConvertTime(){
 
     }
 

@@ -1,10 +1,8 @@
 package com.example.naits.railly;
 
 import android.app.DatePickerDialog;
-import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
-import android.icu.text.DateFormat;
 import android.icu.util.Calendar;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
@@ -14,13 +12,10 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.DatePicker;
-import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -209,16 +204,21 @@ public class HomeActivity extends AppCompatActivity implements DatePickerDialog.
         int currentMonth = calendar.get(Calendar.MONTH) + 1;
         int currentYear = calendar.get(Calendar.YEAR);
 
+        int AMorPM = calendar.get(Calendar.AM_PM);
         int currentHour = calendar.get(Calendar.HOUR);
         int currentMinute = calendar.get(Calendar.MINUTE);
 
+        if(AMorPM == 1){
+            currentHour += 12;
+        }
 
-        int day = HelpMethods.getDayFromString(date);
-        int month = HelpMethods.getMonthFromString(date);
-        int year = HelpMethods.getYearFromString(date);
 
-        int hour = HelpMethods.getHourFromString(time);
-        int minute = HelpMethods.getMinuteFromString(time);
+        int day = ConvertTime.getDayFromString(date);
+        int month = ConvertTime.getMonthFromString(date);
+        int year = ConvertTime.getYearFromString(date);
+
+        int hour = ConvertTime.getHourFromString(time);
+        int minute = ConvertTime.getMinuteFromString(time);
 
 
         if(year < currentYear){

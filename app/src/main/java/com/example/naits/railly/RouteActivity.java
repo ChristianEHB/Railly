@@ -76,14 +76,14 @@ public class RouteActivity extends AppCompatActivity {
 
 
     private String setUrl(String departure, String arrival, String time, String date){
-        String hour = time.substring(0,1);
+        String hour = time.substring(0,2);
         String min = time.substring(3);
 
-        String day = date.substring(0,1);
-        String month = date.substring(3,4);
-        String year = date.substring(6,7);
-        return "https://api.irail.be/connections/?to=Aalst&from=Londerzeel&date=201216&time=1930&timeSel=arrive&format=json";
-        //return String.format("https://api.irail.be/connections/?to=%s&from=%s&date=%s%s%s&time=%s%s&timeSel=arrive",departure,arrival,day,month,year,hour,min);
+        String day = date.substring(0,2);
+        String month = date.substring(3,5);
+        String year = date.substring(8,10);
+        //example "https://api.irail.be/connections/?to=Aalst&from=Londerzeel&date=201216&time=1930&timeSel=arrive&format=json";
+        return String.format("https://api.irail.be/connections/?to=%s&from=%s&date=%s%s%s&time=%s%s&timeSel=arrive&format=json",departure,arrival,day,month,year,hour,min);
     }
 
 

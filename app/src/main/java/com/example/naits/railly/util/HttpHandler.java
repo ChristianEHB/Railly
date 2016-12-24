@@ -1,6 +1,5 @@
-package Api;
+package com.example.naits.railly.util;
 
-import android.os.AsyncTask;
 import android.util.Log;
 
 import org.json.JSONException;
@@ -21,32 +20,12 @@ import java.net.URL;
  * code from http://www.androidhive.info/2012/01/android-json-parsing-tutorial/
  */
 
-public class HttpHandler extends AsyncTask<String, Integer, JSONObject>{
+public class HttpHandler {
 
     private static final String TAG = HttpHandler.class.getSimpleName();
 
     public HttpHandler() {
     }
-
-    @Override
-    protected void onPostExecute(JSONObject jsonObject) {
-        super.onPostExecute(jsonObject);
-    }
-
-    @Override
-    protected JSONObject doInBackground(String... param) {
-        JSONObject response = null;
-        try {
-            response  = getJSONObjectFromURL(param[0]);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return response;
-    }
-
-
 
     public String makeServiceCall(String reqUrl) {
         String response = null;

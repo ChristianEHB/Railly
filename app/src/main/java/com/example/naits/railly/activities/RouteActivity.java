@@ -1,6 +1,7 @@
 package com.example.naits.railly.activities;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,17 +14,21 @@ import com.example.naits.railly.R;
 import com.example.naits.railly.model.Route;
 import com.example.naits.railly.adapters.RouteListAdapter;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import Api.HttpHandler;
+import com.example.naits.railly.util.HttpHandler;
 
 public class RouteActivity extends AppCompatActivity {
 
     private ListView lvRoute;
     private RouteListAdapter adapter;
     private List<Route> routeList;
-    private HttpHandler handler;
+
 
 
     private String arrival, departure, date, hour;
@@ -69,11 +74,11 @@ public class RouteActivity extends AppCompatActivity {
             }
         });
 
-        handler = new HttpHandler();
+
         Log.d("test" , setUrl(departure, arrival, hour, date));
 
 
-        Log.d("JSON",handler.execute(setUrl(departure, arrival, hour, date)).toString());
+        Log.d("JSON",new AsyncRouteFetch().execute(setUrl(departure, arrival, hour, date)).toString());
     }
 
 
@@ -99,5 +104,26 @@ public class RouteActivity extends AppCompatActivity {
     protected void goToStationScreen(View view){
         Intent i = new Intent(this, StationActivity.class);
         startActivity(i);
+    }
+
+
+    private class AsyncRouteFetch extends AsyncTask<String, Integer, JSONObject>{
+        private HttpHandler handler;
+
+        public AsyncRouteFetch(){
+            handler = new HttpHandler();
+        }
+        @Override
+        protected JSONObject doInBackground(String... param) {
+            JSONObject response = null;
+            try {
+                response  = handler.getJSONObjectFromURL(param[0]);
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            return response;
+        }
     }
 }

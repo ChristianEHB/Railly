@@ -1,4 +1,4 @@
-package com.example.naits.railly;
+package com.example.naits.railly.activities;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
@@ -16,14 +16,16 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.example.naits.railly.R;
+
 import java.util.Arrays;
 import java.util.List;
 
-import static com.example.naits.railly.ConvertTime.formatDate;
-import static com.example.naits.railly.ConvertTime.formatTime;
-import static com.example.naits.railly.ConvertTime.setTo24Hour;
-import static com.example.naits.railly.HelpMethods.checkIfDateIsCorrect;
-import static com.example.naits.railly.HelpMethods.checkIfInputIsCorrect;
+import static com.example.naits.railly.util.ConvertTime.formatDate;
+import static com.example.naits.railly.util.ConvertTime.formatTime;
+import static com.example.naits.railly.util.ConvertTime.setTo24Hour;
+import static com.example.naits.railly.util.HelpMethods.checkIfDateIsCorrect;
+import static com.example.naits.railly.util.HelpMethods.checkIfInputIsCorrect;
 
 public class HomeActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener{
 

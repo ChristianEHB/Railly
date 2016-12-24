@@ -1,10 +1,13 @@
-package com.example.naits.railly;
+package com.example.naits.railly.adapters;
 
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
+
+import com.example.naits.railly.R;
+import com.example.naits.railly.model.Route;
 
 import java.util.List;
 

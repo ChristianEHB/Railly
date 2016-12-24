@@ -1,4 +1,4 @@
-package com.example.naits.railly;
+package com.example.naits.railly.util;
 
 import java.util.Calendar;
 import java.util.List;

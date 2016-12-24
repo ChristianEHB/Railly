@@ -46,6 +46,8 @@ public class HttpHandler extends AsyncTask<String, Integer, JSONObject>{
         return response;
     }
 
+
+
     public String makeServiceCall(String reqUrl) {
         String response = null;
         try {
@@ -88,8 +90,10 @@ public class HttpHandler extends AsyncTask<String, Integer, JSONObject>{
         return sb.toString();
     }
 
-    public static JSONObject getJSONObjectFromURL(String urlString) throws IOException, JSONException, JSONException {
-
+    public static JSONObject getJSONObjectFromURL(String urlString) throws IOException, JSONException {
+        /*
+        source:  http://stackoverflow.com/questions/34691175/how-to-send-httprequest-and-get-json-response-in-android
+         */
         HttpURLConnection urlConnection = null;
 
         URL url = new URL(urlString);

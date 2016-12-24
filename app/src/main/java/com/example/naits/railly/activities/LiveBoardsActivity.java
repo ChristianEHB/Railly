@@ -1,10 +1,14 @@
-package com.example.naits.railly;
+package com.example.naits.railly.activities;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ListView;
+
+import com.example.naits.railly.adapters.LiveBoardListAdapter;
+import com.example.naits.railly.R;
+import com.example.naits.railly.model.Route;
 
 import java.util.ArrayList;
 import java.util.List;

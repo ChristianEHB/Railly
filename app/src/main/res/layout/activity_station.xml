@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
 
     android:background="#d1d1d1"
-    tools:context="com.example.naits.railly.StationActivity">
+    tools:context="com.example.naits.railly.activities.StationActivity">
 
     <fragment
         android:layout_width="wrap_content"

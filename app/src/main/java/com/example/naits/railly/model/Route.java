@@ -1,4 +1,4 @@
-package com.example.naits.railly;
+package com.example.naits.railly.model;
 
 /**
  * Created by naits on 19/12/2016.

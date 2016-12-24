@@ -1,8 +1,6 @@
-package com.example.naits.railly;
+package com.example.naits.railly.activities;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
-import android.nfc.Tag;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,6 +8,10 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
+
+import com.example.naits.railly.R;
+import com.example.naits.railly.model.Route;
+import com.example.naits.railly.adapters.RouteListAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -69,7 +71,7 @@ public class RouteActivity extends AppCompatActivity {
 
         handler = new HttpHandler();
         Log.d("test" , setUrl(departure, arrival, hour, date));
-        //Log.d("http req", "onCreate: " + handler.makeServiceCall(setUrl(departure, arrival, hour, date)));
+
 
         Log.d("JSON",handler.execute(setUrl(departure, arrival, hour, date)).toString());
     }

@@ -1,5 +1,8 @@
 package com.example.naits.railly.activities;
 
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
@@ -22,15 +25,16 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 
 import com.example.naits.railly.util.HttpHandler;
 
-public class RouteActivity extends AppCompatActivity {
+public class RoutePickerActivity extends AppCompatActivity {
 
     private ListView lvRoute;
     private RouteListAdapter adapter;
     private List<Route> routeList;
+
+    protected ProgressDialog progDialog;
 
 
     private String arrival, departure, date, hour;
@@ -51,11 +55,9 @@ public class RouteActivity extends AppCompatActivity {
         }
 
 
-
         //TODO: have task get url
+        //AsyncRoutefetch has responsibility of showing routes
         new AsyncRouteFetch().execute(setUrl(departure, arrival, hour, date));
-
-
 
 
     }
@@ -85,7 +87,7 @@ public class RouteActivity extends AppCompatActivity {
         startActivity(i);
     }
 
-    private class AsyncRouteFetch extends AsyncTask<String, Integer, ArrayList<Connection>> {
+    private class AsyncRouteFetch extends AsyncTask<String, Integer, Void> {
 
         ArrayList<Connection> arrCon = null;
 
@@ -94,7 +96,18 @@ public class RouteActivity extends AppCompatActivity {
         }
 
         @Override
-        protected ArrayList<Connection> doInBackground(String... param) {
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progDialog = new ProgressDialog(RoutePickerActivity.this);
+            progDialog.setMessage("Loading...");
+            progDialog.setIndeterminate(false);
+            progDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            progDialog.setCancelable(true);
+            progDialog.show();
+        }
+
+        @Override
+        protected Void doInBackground(String... param) {
             ConnectionDAO conDAO = new ConnectionDAO();
 
             try {
@@ -106,15 +119,14 @@ public class RouteActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
 
+            return null;
 
-
-
-            return arrCon;
         }
 
         @Override
-        protected void onPostExecute(ArrayList<Connection> ce){
-
+        protected void onPostExecute(Void unused) {
+            super.onPostExecute(unused);
+            progDialog.dismiss();
             lvRoute = (ListView) findViewById(R.id.listView_routes);
 
             routeList = new ArrayList<>();
@@ -129,14 +141,28 @@ public class RouteActivity extends AppCompatActivity {
                 }
             });
 
-            if(arrCon != null){
-                for(Connection c : arrCon){
-                    int i = 1;
-                    Log.d("routeactivity:", c.toString());
-                    routeList.add(new Route(i, c.getDeparture().toString(), c.getArrival().toString()));
-                    i++;
-                }
 
+            if (arrCon != null) {
+                if(arrCon.size() !=0) {
+                    for (Connection c : arrCon) {
+                        int i = 1;
+                        Log.d("routeactivity:", c.toString());
+                        routeList.add(new Route(i, c.getDeparture().toString(), c.getArrival().toString()));
+                        i++;
+                    }
+                }
+                else{
+                    AlertDialog alertDialog = new AlertDialog.Builder(RoutePickerActivity.this).create();
+                    alertDialog.setTitle("Sorry!");
+                    alertDialog.setMessage("No routes could be found.");
+                    alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                }
+                            });
+                    alertDialog.show();
+                }
             }
         }
 

@@ -95,7 +95,7 @@ public class HomeActivity extends AppCompatActivity implements DatePickerDialog.
                 && checkIfInputIsCorrect(textViewArrival.getText().toString(), stationList) == true
                 && checkIfDateIsCorrect(textViewHour.getText().toString(), textViewDate.getText().toString()) == true){
 
-            Intent i = new Intent(this, RouteActivity.class);
+            Intent i = new Intent(this, RoutePickerActivity.class);
             /*
             Info doorgeven aan volgende activity
              */

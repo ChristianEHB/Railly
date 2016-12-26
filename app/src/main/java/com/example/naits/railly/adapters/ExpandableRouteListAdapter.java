@@ -66,25 +66,38 @@ public class ExpandableRouteListAdapter extends BaseExpandableListAdapter {
 
     @Override
     public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
-        View v = View.inflate(context, R.layout.item_route_list, null);
+
+        View v = View.inflate(context, R.layout.item_connection_explist, null);
         TextView departureTextView = (TextView) v.findViewById(R.id.route_item_departure);
         TextView arrivalTextView = (TextView) v.findViewById(R.id.route_item_arrival);
         TextView arrivalTimeTextView = (TextView) v.findViewById(R.id.route_item_arrivalTime);
         TextView departureTimeTextView = (TextView) v.findViewById(R.id.route_item_departureTime);
+        TextView changesTextView = (TextView) v.findViewById(R.id.route_item_changes_value);
+        TextView durationTextView = (TextView) v.findViewById(R.id.route_item_duration_value);
+        TextView numberTextView = (TextView) v.findViewById(R.id.route_item_number);
+
 
         String departureText, arrivalText, departureTimeText, arrivalTimetext;
 
         departureText = connections.get(groupPosition).getDeparture().getToStation().getName();
         arrivalText = connections.get(groupPosition).getArrival().getToStation().getName();
 
-        departureTimeText = DateUtil.timeStampToDate(connections.get(groupPosition).getDeparture().getDepartureInfo().getTimeStamp());
-        arrivalTimetext = DateUtil.timeStampToDate(connections.get(groupPosition).getArrival().getDepartureInfo().getTimeStamp());
+        departureTimeText = DateUtil.timeStampToDate(connections.get(groupPosition).getDeparture().getDepartureInfo().getTimeStamp()).substring(11);
+        arrivalTimetext = DateUtil.timeStampToDate(connections.get(groupPosition).getArrival().getDepartureInfo().getTimeStamp()).substring(11);
 
         departureTextView.setText(departureText);
         arrivalTextView.setText(arrivalText);
 
         departureTimeTextView.setText(departureTimeText);
         arrivalTimeTextView.setText(arrivalTimetext);
+
+        changesTextView.setText(((Integer) connections.get(groupPosition).getVias().size()).toString());
+        durationTextView.setText(((Float) connections.get(groupPosition).getDurationInMinutes()).toString());
+
+        Integer tableRow = (Integer) groupPosition +1;
+        numberTextView.setText(tableRow.toString());
+
+
 
         return v;
     }

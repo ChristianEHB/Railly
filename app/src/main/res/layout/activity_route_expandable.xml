@@ -42,7 +42,10 @@
         android:layout_below="@+id/textViewRoutes"
         android:layout_alignLeft="@+id/textViewRoutes"
         android:layout_alignStart="@+id/textViewRoutes"
-        android:layout_marginTop="31dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="15dp"
+        android:dividerHeight="10dp"
+        android:divider="#d1d1d1"
         android:layout_alignRight="@+id/textViewRoutes"
         android:layout_alignEnd="@+id/textViewRoutes"
         android:id="@+id/expList_Routes" />

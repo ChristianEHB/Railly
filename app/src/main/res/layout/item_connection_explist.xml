@@ -11,28 +11,12 @@
     android:weightSum="1">
 
     <GridLayout
-        android:layout_width="24dp"
-        android:layout_height="89dp">
-
-        <TextView
-            android:layout_width="27dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/route_item_number"
-            android:text="1"
-            android:textSize="20sp"
-            android:textColor="#00a7f4"
-            android:layout_column="0"
-            android:layout_row="0"
-            android:gravity="center"/>
-
-    </GridLayout>
-
-    <GridLayout
-        android:layout_width="214dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:ignore="UselessParent">
+        tools:ignore="UselessParent"
+        >
         <TextView
-            android:layout_width="150dp"
+            android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:id="@+id/route_item_departure"
             android:text="Departure"
@@ -41,61 +25,8 @@
             android:layout_column="0"
             android:layout_row="0"
             />
-
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/route_item_departureTime"
-            android:layout_marginLeft="5dp"
-            android:text="19:30"
-            android:layout_column="1"
-            android:layout_row="1"
-            tools:ignore="RtlHardcoded" />
-
-        <TextView
-            android:layout_width="157dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/route_itme_changes"
-            android:text="Changes:"
-            android:textSize="20sp"
-            android:textColor="#f92a3f"
-            android:layout_column="0"
-            android:layout_row="3"
-            tools:text="Changes:" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/route_item_changes_value"
-            android:layout_marginLeft="5dp"
-            android:layout_column="1"
-            android:layout_row="3"
-            tools:ignore="RtlHardcoded"
-            android:text="00:00" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/route_item_duration"
-            android:text="Duration:"
-            android:textSize="20sp"
-            android:textColor="#f92a3f"
-            android:layout_column="0"
-            android:layout_row="2"
-            tools:text="Duration (min):" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/route_item_duration_value"
-            android:layout_marginLeft="5dp"
-            android:layout_column="1"
-            android:layout_row="2"
-            tools:ignore="RtlHardcoded"
-            android:text="00:00" />
-
-        <TextView
-            android:layout_width="136dp"
+            android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:id="@+id/route_item_arrival"
             android:text="Arrival"
@@ -104,7 +35,6 @@
             android:layout_column="0"
             android:layout_row="1"
             />
-
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -114,8 +44,48 @@
             android:layout_column="1"
             android:layout_row="0"
             tools:ignore="RtlHardcoded" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/route_item_departureTime"
+            android:layout_marginLeft="5dp"
+            android:text="19:30"
+            android:layout_column="1"
+            android:layout_row="1"
+            tools:ignore="RtlHardcoded" />
+        <LinearLayout
+            android:layout_column="0"
+            android:layout_row="2"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/route_item_duration"
+                android:text="Duration:"
+                tools:ignore="RtlHardcoded" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/route_item_duration_value"
+                android:text="15h50m"
+                android:layout_marginLeft="10dp"
+                tools:ignore="RtlHardcoded" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="35dp"
+                android:text="Changes:"
+                android:id="@+id/route_item_changes"
+                tools:ignore="RtlHardcoded" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:id="@+id/route_item_changes_value"
+                android:text="1"
+                tools:ignore="RtlHardcoded" />
+        </LinearLayout>
 
     </GridLayout>
-
 
 </LinearLayout>

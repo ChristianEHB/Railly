@@ -11,11 +11,11 @@
     android:weightSum="1">
 
     <GridLayout
-        android:layout_width="48dp"
+        android:layout_width="24dp"
         android:layout_height="89dp">
 
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="27dp"
             android:layout_height="wrap_content"
             android:id="@+id/route_item_number"
             android:text="1"
@@ -28,7 +28,7 @@
     </GridLayout>
 
     <GridLayout
-        android:layout_width="match_parent"
+        android:layout_width="214dp"
         android:layout_height="wrap_content"
         tools:ignore="UselessParent">
         <TextView

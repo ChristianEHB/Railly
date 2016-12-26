@@ -1,5 +1,8 @@
 package com.example.naits.railly.DAO;
 
+import android.os.Build;
+import android.support.annotation.RequiresApi;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,25 +19,25 @@ public class StationDAO {
 
     private static final String ALL_STATIONS_URL = "https://irail.be/stations/NMBS";
 
-    public static void loadCache() throws JSONException {
+
+    public static void loadCache(JSONObject jBase) throws JSONException, IOException {
         StationCache cache = StationCache.getInstance();
         String url = new HttpHandler().makeServiceCall(ALL_STATIONS_URL);
-        JSONObject jBase = new JSONObject(url);
+
+
         JSONArray jGraph = jBase.getJSONArray("@graph");
+
             /*jGraph.forEach(new Consumer<Object>() {
-				@Override
+                @Override
 				public void accept(Object t) {
 					cache.addStation(getStation((JSONObject)t));
 				}
 			});*/
 
-        for(int i = 0; i < jGraph.length(); i++){
+        for (int i = 0; i < jGraph.length(); i++) {
             JSONObject obj = (JSONObject) jGraph.get(i);
             cache.addStation(getStation(obj));
-
         }
-
-
     }
 
     private static Station getStation(JSONObject arr) throws JSONException {
@@ -64,7 +67,7 @@ public class StationDAO {
             }
         });*/
 
-        for(int i = 0; i < alt.length(); i++){
+        for (int i = 0; i < alt.length(); i++) {
             JSONObject obj = (JSONObject) alt.get(i);
             String value = obj.getString("@value"), language = obj.getString("@language");
             alternatives.add(new AlternativeStationName(value, language));

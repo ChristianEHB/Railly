@@ -1,12 +1,18 @@
 package com.example.naits.railly.util;
 
+import android.content.Context;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.util.Log;
+
+import com.example.naits.railly.R;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -69,6 +75,28 @@ public class HttpHandler {
         return sb.toString();
     }
 
+    public static JSONObject getJSONObjectFromStream(InputStream is) throws IOException, JSONException {
+        BufferedReader br=new BufferedReader(new InputStreamReader(is));
+
+        char[] buffer = new char[1024];
+
+
+        String jsonString = new String();
+
+        StringBuilder sb = new StringBuilder();
+        String line;
+        while ((line = br.readLine()) != null) {
+            sb.append(line+"\n");
+        }
+        br.close();
+
+        jsonString = sb.toString();
+
+        Log.d("JSON", "JSON: " + jsonString);
+
+        return new JSONObject(jsonString);
+    }
+
     public static JSONObject getJSONObjectFromURL(String urlString) throws IOException, JSONException {
         /*
         source:  http://stackoverflow.com/questions/34691175/how-to-send-httprequest-and-get-json-response-in-android
@@ -102,7 +130,7 @@ public class HttpHandler {
 
         jsonString = sb.toString();
 
-        Log.d("JSON", "JSON: " + jsonString);
+
 
         return new JSONObject(jsonString);
     }

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -17,18 +18,13 @@ import com.example.naits.railly.model.Connection;
 import com.example.naits.railly.model.Route;
 import com.example.naits.railly.adapters.RouteListAdapter;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 import com.example.naits.railly.util.HttpHandler;
-
-import com.example.naits.railly.DAO.ConnectionDAO;
 
 public class RouteActivity extends AppCompatActivity {
 
@@ -45,10 +41,7 @@ public class RouteActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_route);
 
-        lvRoute = (ListView) findViewById(R.id.listView_routes);
-
-        routeList = new ArrayList<>();
-
+        //retrieve data from prev activity
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             arrival = extras.getString("arrival").toString();
@@ -57,45 +50,17 @@ public class RouteActivity extends AppCompatActivity {
             hour = extras.getString("hour").toString();
         }
 
-        // add data from api here
-
-        routeList.add(new Route(1, "Brussel-Zuid", "Antwerpen-Centraal"));
-        routeList.add(new Route(2, "Brussel-Noord", "Mechelen"));
-        routeList.add(new Route(3, "Brugge", "Antwerpen-Centraal"));
-        routeList.add(new Route(4, "Brussel-Zuid", "Brussel-Noord"));
-        routeList.add(new Route(5, "Brussel-Noord", "Antwerpen-Centraal"));
-        routeList.add(new Route(6, "Mechelen", "Brussel-Noord"));
-        routeList.add(new Route(7, "Brussel-Zuid", "Antwerpen-Centraal"));
-
-        adapter = new RouteListAdapter(getApplicationContext(), routeList);
-        lvRoute.setAdapter(adapter);
-
-        lvRoute.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(getApplicationContext(), "Clicked on route = " + view.getTag(), Toast.LENGTH_LONG).show();
-            }
-        });
 
 
-        Log.d("test", setUrl(departure, arrival, hour, date));
+        //TODO: have task get url
+        new AsyncRouteFetch().execute(setUrl(departure, arrival, hour, date));
 
 
-//        Log.d("JSON", new AsyncRouteFetch().execute(setUrl(departure, arrival, hour, date)).toString());
-//
-//        try {
-//            ArrayList<Connection> connections = new AsyncRouteFetch().execute(setUrl(departure, arrival, hour, date)).get();
-//            Log.d("connection", connections.get(0).toString());
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        } catch (ExecutionException e) {
-//            e.printStackTrace();
-//        }
 
 
     }
 
-
+    //TODO: Put this in connectionDAO
     private String setUrl(String departure, String arrival, String time, String date) {
         String hour = time.substring(0, 2);
         String min = time.substring(3);
@@ -120,8 +85,9 @@ public class RouteActivity extends AppCompatActivity {
         startActivity(i);
     }
 
-    private class AsyncRouteFetch extends AsyncTask<String, Integer,ArrayList<Connection>> {
+    private class AsyncRouteFetch extends AsyncTask<String, Integer, ArrayList<Connection>> {
 
+        ArrayList<Connection> arrCon = null;
 
         public AsyncRouteFetch() {
 
@@ -130,33 +96,51 @@ public class RouteActivity extends AppCompatActivity {
         @Override
         protected ArrayList<Connection> doInBackground(String... param) {
             ConnectionDAO conDAO = new ConnectionDAO();
-            ArrayList<Connection> arrCon = null;
+
             try {
+                JSONObject JOstatCache = new HttpHandler().getJSONObjectFromStream(getResources().openRawResource(R.raw.stationcache));
+                new StationDAO().loadCache(JOstatCache);
+
                 arrCon = (ArrayList<Connection>) conDAO.getConnections(param[0]);
             } catch (Exception e) {
                 e.printStackTrace();
             }
+
+
+
+
             return arrCon;
         }
+
+        @Override
+        protected void onPostExecute(ArrayList<Connection> ce){
+
+            lvRoute = (ListView) findViewById(R.id.listView_routes);
+
+            routeList = new ArrayList<>();
+
+            adapter = new RouteListAdapter(getApplicationContext(), routeList);
+            lvRoute.setAdapter(adapter);
+
+            lvRoute.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    Toast.makeText(getApplicationContext(), "Clicked on route = " + view.getTag(), Toast.LENGTH_LONG).show();
+                }
+            });
+
+            if(arrCon != null){
+                for(Connection c : arrCon){
+                    int i = 1;
+                    Log.d("routeactivity:", c.toString());
+                    routeList.add(new Route(i, c.getDeparture().toString(), c.getArrival().toString()));
+                    i++;
+                }
+
+            }
+        }
+
+
     }
-//    private class AsyncRouteFetch extends AsyncTask<String, Integer, JSONObject> {
-//        private HttpHandler handler;
-//
-//        public AsyncRouteFetch() {
-//            handler = new HttpHandler();
-//        }
-//
-//        @Override
-//        protected JSONObject doInBackground(String... param) {
-//            JSONObject response = null;
-//            try {
-//                response = handler.getJSONObjectFromURL(param[0]);
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            } catch (JSONException e) {
-//                e.printStackTrace();
-//            }
-//            return response;
-//        }
-//    }
+
 }

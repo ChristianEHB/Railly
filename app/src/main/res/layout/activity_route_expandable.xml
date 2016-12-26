@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_route"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.naits.railly.activities.RoutePickerActivity"
+    android:background="#d1d1d1">
+
+    <fragment
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:name="layout.MenuFragment"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/fragmentMenu"
+        tools:layout="@layout/fragment_menu"
+        android:layout_margin="15dp"/>
+
+    <TextView
+        android:text="@string/routes"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_below="@+id/fragmentMenu"
+        android:id="@+id/textViewRoutes"
+        android:background="#ffffff"
+        android:textAlignment="center"
+        android:textSize="18dp"
+        android:paddingTop="12dp"
+        android:textColor="@color/colorPrimary"
+        android:textStyle="bold"
+        android:layout_alignRight="@+id/fragmentMenu"
+        android:layout_alignEnd="@+id/fragmentMenu"
+        android:layout_alignLeft="@+id/fragmentMenu"
+        android:layout_alignStart="@+id/fragmentMenu" />
+
+    <ExpandableListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/textViewRoutes"
+        android:layout_alignLeft="@+id/textViewRoutes"
+        android:layout_alignStart="@+id/textViewRoutes"
+        android:layout_marginTop="31dp"
+        android:layout_alignRight="@+id/textViewRoutes"
+        android:layout_alignEnd="@+id/textViewRoutes"
+        android:id="@+id/expList_Routes" />
+
+</RelativeLayout>

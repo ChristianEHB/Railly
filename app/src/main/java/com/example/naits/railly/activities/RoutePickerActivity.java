@@ -133,28 +133,13 @@ public class RoutePickerActivity extends AppCompatActivity {
 
 
 
-            //adapter = new RouteListAdapter(getApplicationContext(), routeList);
+
             adapter = new ExpandableRouteListAdapter(getApplicationContext(),arrCon);
             lvRoute.setAdapter(adapter);
 
-            lvRoute.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    Toast.makeText(getApplicationContext(), "Clicked on route = " + view.getTag(), Toast.LENGTH_LONG).show();
-                }
-            });
 
-
-            if (arrCon != null) {
-                if(arrCon.size() !=0) {
-                    for (Connection c : arrCon) {
-                        int i = 1;
-                        Log.d("routeactivity:", c.toString());
-                        //routeList.add(new Route(i, c.getDeparture().toString(), c.getArrival().toString()));
-                        i++;
-                    }
-                }
-                else{
+            if (arrCon != null){
+                if(arrCon.size() == 0){
                     AlertDialog alertDialog = new AlertDialog.Builder(RoutePickerActivity.this).create();
                     alertDialog.setTitle("Sorry!");
                     alertDialog.setMessage("No routes could be found.");

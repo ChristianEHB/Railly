@@ -17,18 +17,18 @@ public class AboutActivity extends AppCompatActivity {
 
     // Button Clicks
 
-    protected void goToRouteScreen(View view){
+    public void goToRouteScreen(View view){
         Intent i = new Intent(this, HomeActivity.class);
 
         startActivity(i);
     }
 
-    protected void goToStationScreen(View view){
+    public void goToStationScreen(View view){
         Intent i = new Intent(this, StationActivity.class);
         startActivity(i);
     }
 
-    protected void goToAboutScreen(View view){
+    public void goToAboutScreen(View view){
         Intent i = new Intent(this, AboutActivity.class);
         startActivity(i);
     }

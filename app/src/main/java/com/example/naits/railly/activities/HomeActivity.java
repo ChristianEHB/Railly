@@ -68,34 +68,34 @@ public class HomeActivity extends AppCompatActivity implements DatePickerDialog.
 
     // Button Clicks
 
-    protected void goToRouteScreen(View view){
+    public void goToRouteScreen(View view){
         Intent i = new Intent(this, HomeActivity.class);
         startActivity(i);
     }
 
-    protected void goToStationScreen(View view){
+    public void goToStationScreen(View view){
         Intent i = new Intent(this, StationActivity.class);
         startActivity(i);
     }
 
-    protected void goToAboutScreen(View view){
+    public void goToAboutScreen(View view){
         Intent i = new Intent(this, AboutActivity.class);
         startActivity(i);
     }
 
-    protected void goToTimePickerOnClick(View view){
+    public void goToTimePickerOnClick(View view){
         TimePickerDialog timePickerDialog = new TimePickerDialog(HomeActivity.this, HomeActivity.this, hour, min, android.text.format.DateFormat.is24HourFormat(this));
         timePickerDialog.show();
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
-    protected void goToDatePickerOnClick(View view){
+    public void goToDatePickerOnClick(View view){
         DatePickerDialog datePickerDialog = new DatePickerDialog(HomeActivity.this, HomeActivity.this, year, month, day);
         datePickerDialog.show();
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
-    protected void searchOnClick(View view){
+    public void searchOnClick(View view){
         if(checkIfInputIsCorrect(textViewDeparture.getText().toString(), stationList) == true
                 && checkIfInputIsCorrect(textViewArrival.getText().toString(), stationList) == true
                 && checkIfDateIsCorrect(textViewHour.getText().toString(), textViewDate.getText().toString()) == true){

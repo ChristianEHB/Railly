@@ -8,8 +8,17 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Toast;
 
+import com.example.naits.railly.DAO.StationDAO;
 import com.example.naits.railly.R;
+import com.example.naits.railly.model.Connection;
+import com.example.naits.railly.model.StationCache;
+import com.example.naits.railly.util.HttpHandler;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -34,7 +43,19 @@ public class StationActivity extends AppCompatActivity {
 
     private void autoCompleteRoutePlanner(){
         // Get the string array
+        //TODO: Move to one source of station names -> the JSON file! Station.getStationFromName does not like the xml station names
+        //We should also initialize the station cache at the start of the app
         String[] stations = getResources().getStringArray(R.array.stations);
+//        try {
+//            if (StationCache.getInstance().getStationsNames().length == 0) {
+//                JSONObject JOstatCache = new HttpHandler().getJSONObjectFromStream(getResources().openRawResource(R.raw.stationcache));
+//                new StationDAO().loadCache(JOstatCache);
+//            }
+//            stations = StationCache.getInstance().getStationsNames();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+
 
         // Create the adapter and set it to the AutoCompleteTextView
         autoCompleteTextView = (AutoCompleteTextView) findViewById(R.id.autocomplete_station);
@@ -48,6 +69,7 @@ public class StationActivity extends AppCompatActivity {
 
     protected void goToRouteScreen(View view){
         Intent i = new Intent(this, HomeActivity.class);
+
         startActivity(i);
     }
 
@@ -60,6 +82,7 @@ public class StationActivity extends AppCompatActivity {
 
         if(checkIfInputIsCorrect(autoCompleteTextView.getText().toString()) == true){
             Intent i = new Intent(this, LiveBoardsActivity.class);
+            i.putExtra("station", autoCompleteTextView.getText().toString());
             startActivity(i);
         }
         else{

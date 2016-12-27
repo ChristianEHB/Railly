@@ -11,7 +11,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -38,16 +37,9 @@ public class ConnectionDAO {
             }
 
             JSONArray arrCon = jBase.getJSONArray("connection");
-            /*arrCon.forEach(new Consumer<Object>() {
-                @Override
-                public void accept(Object t) {
-                    JSONObject obj = (JSONObject) t;
-                    Connection c = getConnection(obj);
-                    connections.add(c);
-                }
-            });*/
 
-            for(int i = 0; i < arrCon.length(); i++){
+
+            for (int i = 0; i < arrCon.length(); i++) {
                 JSONObject obj = (JSONObject) arrCon.get(i);
                 Connection c = getConnection(obj);
                 connections.add(c);

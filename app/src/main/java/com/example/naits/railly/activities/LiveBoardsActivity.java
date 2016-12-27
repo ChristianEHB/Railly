@@ -1,15 +1,32 @@
 package com.example.naits.railly.activities;
 
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
 
+import com.example.naits.railly.DAO.DepartureDAO;
+import com.example.naits.railly.DAO.StationDAO;
 import com.example.naits.railly.adapters.LiveBoardListAdapter;
 import com.example.naits.railly.R;
+import com.example.naits.railly.model.Departure;
+import com.example.naits.railly.model.DepartureInfo;
 import com.example.naits.railly.model.Route;
+import com.example.naits.railly.model.Station;
+import com.example.naits.railly.model.StationCache;
+import com.example.naits.railly.util.DateUtil;
+import com.example.naits.railly.util.HttpHandler;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,25 +36,27 @@ public class LiveBoardsActivity extends AppCompatActivity {
     private LiveBoardListAdapter adapter;
     private List<Route> routeList;
 
-    private String time, destination, platform, canceled, delay;
+    private String stationString,time, destination, platform, canceled, delay;
+
+    protected ProgressDialog progDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_live_boards);
 
-        lvLiveBoard = (ListView) findViewById(R.id.listView_liveboard);
 
+
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            stationString = extras.getString("station").toString();
+        }
+        Log.d("stationstring", stationString);
         routeList = new ArrayList<>();
 
-        routeList.add(new Route(1, "17:45", "Brussel-Zuid", "12", "0", "12" ));
-        routeList.add(new Route(2, "18:45", "Brussel-Zuid", "1", "0", "0" ));
-        routeList.add(new Route(3, "19:45", "Brussel-Noord", "6", "1", "5" ));
-        routeList.add(new Route(4, "20:45", "Brussel-Zuid", "1", "1", "5" ));
-        routeList.add(new Route(5, "21:45", "Brussel-Noord", "4", "0", "0" ));
+        new AsyncInitLiveBoard().execute(stationString);
 
-        adapter = new LiveBoardListAdapter(getApplicationContext(), routeList);
-        lvLiveBoard.setAdapter(adapter);
+
     }
 
     // Button Clicks
@@ -50,6 +69,94 @@ public class LiveBoardsActivity extends AppCompatActivity {
     protected void goToStationScreen(View view){
         Intent i = new Intent(this, StationActivity.class);
         startActivity(i);
+    }
+
+    private class AsyncInitLiveBoard extends AsyncTask<String, Integer, Void> {
+
+        protected List<Departure> departures = null;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progDialog = new ProgressDialog(LiveBoardsActivity.this);
+            progDialog.setMessage("Loading...");
+            progDialog.setIndeterminate(false);
+            progDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            progDialog.setCancelable(true);
+            progDialog.show();
+        }
+
+
+        @Override
+        protected Void doInBackground(String... params) {
+
+            departures = new ArrayList<Departure>();
+
+
+
+
+            try {
+                if(StationCache.getInstance().getStationsNames().length == 0) {
+                    JSONObject JOstatCache = new HttpHandler().getJSONObjectFromStream(getResources().openRawResource(R.raw.stationcache));
+                    new StationDAO().loadCache(JOstatCache);
+                }
+                Station station =  StationCache.getInstance().getStationWithName(stationString);
+                if(station != null) {
+                    departures = new DepartureDAO().getDeparturesFrom(station);
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void unused){
+            progDialog.dismiss();
+
+
+            if (departures != null){
+                if(departures.size() == 0){
+                    AlertDialog alertDialog = new AlertDialog.Builder(LiveBoardsActivity.this).create();
+                    alertDialog.setTitle("Sorry!");
+                    alertDialog.setMessage("No departures could be found.");
+                    alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                }
+                            });
+                    alertDialog.show();
+                }
+                else{
+                    //Convert departures to route
+                    //TODO: Change liveboardlistadapter to accept departure objects
+
+                    ArrayList<Route> routes = new ArrayList<Route>();
+
+                    for(Departure d : departures){
+                        DepartureInfo di = d.getDepartureInfo();
+                        int i = 0;
+                        String arrivalTime = DateUtil.timeStampToDate(d.getDepartureInfo().getTimeStamp());
+                        String destination = d.getDirection();
+                        String platform = di.getPlatform().getName();
+                        String canceled = String.valueOf(di.isCanceled());
+                        String delay = String.valueOf(di.getDelay());
+
+
+                        Route r = new Route(i,arrivalTime,destination,platform,canceled,delay);
+                        i++;
+                    }
+                    lvLiveBoard = (ListView) findViewById(R.id.listView_liveboard);
+                    adapter = new LiveBoardListAdapter(getApplicationContext(), routeList);
+                    lvLiveBoard.setAdapter(adapter);
+                }
+            }
+        }
     }
 
 }

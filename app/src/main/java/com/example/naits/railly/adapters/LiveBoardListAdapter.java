@@ -56,7 +56,7 @@ public class LiveBoardListAdapter extends BaseAdapter{
         platform.setText("Plat. " + routeList.get(position).getPlatform());
 
         String isCanceled = routeList.get(position).getCanceled();
-        if (!isCanceled.equals("0")) {
+        if (!isCanceled.equals("false")) {
             canceled.setTextColor(Color.RED);
             canceled.setText("Canceled");
             delay.setText("");

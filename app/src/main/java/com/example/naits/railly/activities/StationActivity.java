@@ -33,8 +33,18 @@ public class StationActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_station);
+        try {
+            if (StationCache.getInstance().getStationsNames().length == 0) {
+                JSONObject JOstatCache = new HttpHandler().getJSONObjectFromStream(getResources().openRawResource(R.raw.stationcache));
+                new StationDAO().loadCache(JOstatCache);
+            }
 
-        stationList = Arrays.asList(getResources().getStringArray(R.array.stations));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        //stationList = Arrays.asList(getResources().getStringArray(R.array.stations));
+        stationList = Arrays.asList(StationCache.getInstance().getStationsNames());
         autoCompleteRoutePlanner();
 
 
@@ -45,16 +55,8 @@ public class StationActivity extends AppCompatActivity {
         // Get the string array
         //TODO: Move to one source of station names -> the JSON file! Station.getStationFromName does not like the xml station names
         //We should also initialize the station cache at the start of the app
-        String[] stations = getResources().getStringArray(R.array.stations);
-//        try {
-//            if (StationCache.getInstance().getStationsNames().length == 0) {
-//                JSONObject JOstatCache = new HttpHandler().getJSONObjectFromStream(getResources().openRawResource(R.raw.stationcache));
-//                new StationDAO().loadCache(JOstatCache);
-//            }
-//            stations = StationCache.getInstance().getStationsNames();
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
+        //String[] stations = getResources().getStringArray(R.array.stations);
+        String[] stations = StationCache.getInstance().getStationsNames();
 
 
         // Create the adapter and set it to the AutoCompleteTextView

@@ -51,7 +51,7 @@ public class LiveBoardsActivity extends AppCompatActivity {
         if (extras != null) {
             stationString = extras.getString("station").toString();
         }
-        Log.d("stationstring", stationString);
+
         routeList = new ArrayList<>();
 
         new AsyncInitLiveBoard().execute(stationString);
@@ -92,16 +92,13 @@ public class LiveBoardsActivity extends AppCompatActivity {
 
             departures = new ArrayList<Departure>();
 
-
-
-
             try {
                 if(StationCache.getInstance().getStationsNames().length == 0) {
                     JSONObject JOstatCache = new HttpHandler().getJSONObjectFromStream(getResources().openRawResource(R.raw.stationcache));
                     new StationDAO().loadCache(JOstatCache);
                 }
                 Station station =  StationCache.getInstance().getStationWithName(stationString);
-                if(station != null) {
+                if(station != null) { //Kan gebeuren door slechte overeenkomst voorgestelde stationsnamen en die uit de cache, moet gefixed
                     departures = new DepartureDAO().getDeparturesFrom(station);
                 }
             } catch (JSONException e) {
@@ -117,7 +114,6 @@ public class LiveBoardsActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Void unused){
             progDialog.dismiss();
-
 
             if (departures != null){
                 if(departures.size() == 0){
@@ -141,18 +137,18 @@ public class LiveBoardsActivity extends AppCompatActivity {
                     for(Departure d : departures){
                         DepartureInfo di = d.getDepartureInfo();
                         int i = 0;
-                        String arrivalTime = DateUtil.timeStampToDate(d.getDepartureInfo().getTimeStamp());
+                        String arrivalTime = DateUtil.timeStampToDate(d.getDepartureInfo().getTimeStamp()).substring(11);//discard date from string
                         String destination = d.getDirection();
                         String platform = di.getPlatform().getName();
                         String canceled = String.valueOf(di.isCanceled());
                         String delay = String.valueOf(di.getDelay());
 
-
                         Route r = new Route(i,arrivalTime,destination,platform,canceled,delay);
+                        routes.add(r);
                         i++;
                     }
                     lvLiveBoard = (ListView) findViewById(R.id.listView_liveboard);
-                    adapter = new LiveBoardListAdapter(getApplicationContext(), routeList);
+                    adapter = new LiveBoardListAdapter(getApplicationContext(), routes);
                     lvLiveBoard.setAdapter(adapter);
                 }
             }

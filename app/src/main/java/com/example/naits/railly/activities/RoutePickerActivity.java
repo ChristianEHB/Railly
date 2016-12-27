@@ -89,6 +89,11 @@ public class RoutePickerActivity extends AppCompatActivity {
         startActivity(i);
     }
 
+    protected void goToAboutScreen(View view){
+        Intent i = new Intent(this, AboutActivity.class);
+        startActivity(i);
+    }
+
     private class AsyncRouteFetch extends AsyncTask<String, Integer, Void> {
 
         protected ArrayList<Connection> arrCon = null;

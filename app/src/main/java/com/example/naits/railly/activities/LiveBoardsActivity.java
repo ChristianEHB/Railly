@@ -71,6 +71,11 @@ public class LiveBoardsActivity extends AppCompatActivity {
         startActivity(i);
     }
 
+    protected void goToAboutScreen(View view){
+        Intent i = new Intent(this, AboutActivity.class);
+        startActivity(i);
+    }
+
     private class AsyncInitLiveBoard extends AsyncTask<String, Integer, Void> {
 
         protected List<Departure> departures = null;

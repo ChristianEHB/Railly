@@ -80,6 +80,11 @@ public class StationActivity extends AppCompatActivity {
         startActivity(i);
     }
 
+    protected void goToAboutScreen(View view){
+        Intent i = new Intent(this, AboutActivity.class);
+        startActivity(i);
+    }
+
     protected void searchStationOnClick(View v){
 
         if(checkIfInputIsCorrect(autoCompleteTextView.getText().toString()) == true){

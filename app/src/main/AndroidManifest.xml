@@ -19,7 +19,8 @@
         </activity>
         <activity android:name=".activities.RoutePickerActivity" />
         <activity android:name=".activities.LiveBoardsActivity" />
-        <activity android:name=".activities.StationActivity"></activity>
+        <activity android:name=".activities.StationActivity" />
+        <activity android:name=".activities.AboutActivity"></activity>
     </application>
 
 </manifest>

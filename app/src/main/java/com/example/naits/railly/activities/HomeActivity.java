@@ -78,6 +78,11 @@ public class HomeActivity extends AppCompatActivity implements DatePickerDialog.
         startActivity(i);
     }
 
+    protected void goToAboutScreen(View view){
+        Intent i = new Intent(this, AboutActivity.class);
+        startActivity(i);
+    }
+
     protected void goToTimePickerOnClick(View view){
         TimePickerDialog timePickerDialog = new TimePickerDialog(HomeActivity.this, HomeActivity.this, hour, min, android.text.format.DateFormat.is24HourFormat(this));
         timePickerDialog.show();

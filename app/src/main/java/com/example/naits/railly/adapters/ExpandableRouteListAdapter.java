@@ -1,6 +1,7 @@
 package com.example.naits.railly.adapters;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
@@ -94,10 +95,7 @@ public class ExpandableRouteListAdapter extends BaseExpandableListAdapter {
         changesTextView.setText(((Integer) connections.get(groupPosition).getVias().size()).toString());
         String duration =((Float) connections.get(groupPosition).getDurationInMinutes()).toString();
 
-        durationTextView.setText(duration.substring(0,duration.length()-2) + "min");
-
-
-
+        durationTextView.setText(duration.substring(0,duration.length()-2) + " min");
 
         return v;
     }
@@ -106,20 +104,22 @@ public class ExpandableRouteListAdapter extends BaseExpandableListAdapter {
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
         View v = View.inflate(context, R.layout.item_route_list, null);
         TextView departureTextView = (TextView) v.findViewById(R.id.route_item_departure);
-        TextView arrivalTextView = (TextView) v.findViewById(R.id.route_item_arrival);
-        TextView arrivalTimeTextView = (TextView) v.findViewById(R.id.route_item_arrivalTime);
         TextView departureTimeTextView = (TextView) v.findViewById(R.id.route_item_departureTime);
+
+
 
         String departureText, arrivalText, departureTimeText, arrivalTimetext;
 
         departureText = connections.get(groupPosition).getVias().get(childPosition).getStation().getName();
-        arrivalText = connections.get(groupPosition).getVias().get(childPosition).getDepInfo().toString();
+        //arrivalText = connections.get(groupPosition).getVias().get(childPosition).getDepInfo().toString();
 
         //departureTimeText = DateUtil.timeStampToDate(connections.get(groupPosition).getVias().get(childPosition).getDepInfo().toString());
         //arrivalTimetext = DateUtil.timeStampToDate(connections.get(groupPosition).getArrival().getDepartureInfo().getTimeStamp());
 
-        departureTextView.setText(departureText);
-        arrivalTextView.setText(arrivalText);
+
+
+        departureTextView.setText("Via " + departureText);
+        //arrivalTextView.setText(arrivText);
 
         //departureTimeTextView.setText(departureTimeText);
         //arrivalTimeTextView.setText(arrivalTimetext);

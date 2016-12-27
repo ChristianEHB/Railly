@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
 
@@ -36,7 +35,7 @@ public class LiveBoardsActivity extends AppCompatActivity {
     private LiveBoardListAdapter adapter;
     private List<Route> routeList;
 
-    private String stationString,time, destination, platform, canceled, delay;
+    private String stationString;
 
     protected ProgressDialog progDialog;
 
@@ -98,7 +97,7 @@ public class LiveBoardsActivity extends AppCompatActivity {
                     new StationDAO().loadCache(JOstatCache);
                 }
                 Station station =  StationCache.getInstance().getStationWithName(stationString);
-                if(station != null) { //Kan gebeuren door slechte overeenkomst voorgestelde stationsnamen en die uit de cache, moet gefixed
+                if(station != null) {
                     departures = new DepartureDAO().getDeparturesFrom(station);
                 }
             } catch (JSONException e) {

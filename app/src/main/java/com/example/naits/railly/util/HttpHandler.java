@@ -1,18 +1,15 @@
 package com.example.naits.railly.util;
 
-import android.content.Context;
-import android.os.Build;
-import android.support.annotation.RequiresApi;
+
 import android.util.Log;
 
-import com.example.naits.railly.R;
+
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;

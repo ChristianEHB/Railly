@@ -59,6 +59,7 @@ public class RoutePickerActivity extends AppCompatActivity {
 
         //TODO: have task get url
         //AsyncRoutefetch has responsibility of showing routes
+        Log.d("Url:",setUrl(departure, arrival, hour, date));
         new AsyncRouteFetch().execute(setUrl(departure, arrival, hour, date));
 
 

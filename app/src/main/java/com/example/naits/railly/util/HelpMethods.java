@@ -39,8 +39,8 @@ public class HelpMethods {
         int month = ConvertTime.getMonthFromString(date);
         int year = ConvertTime.getYearFromString(date);
 
-        int hour = ConvertTime.getHourFromString(time);
-        int minute = ConvertTime.getMinuteFromString(time);
+        int hour = Integer.parseInt(ConvertTime.getHourFromString(time));
+        int minute = Integer.parseInt(ConvertTime.getMinuteFromString(time));
 
 
         if(year < currentYear){

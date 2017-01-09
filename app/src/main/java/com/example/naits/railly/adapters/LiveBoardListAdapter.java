@@ -55,6 +55,8 @@ public class LiveBoardListAdapter extends BaseAdapter{
         destination.setText(routeList.get(position).getDestination());
         platform.setText("Plat. " + routeList.get(position).getPlatform());
 
+        int convertedDelay = Integer.parseInt(routeList.get(position).getDelay()) / 60;
+
         String isCanceled = routeList.get(position).getCanceled();
         if (!isCanceled.equals("false")) {
             canceled.setTextColor(Color.RED);
@@ -67,7 +69,7 @@ public class LiveBoardListAdapter extends BaseAdapter{
                 delay.setText("On time");
             } else {
                 delay.setTextColor(Color.RED);
-                delay.setText(routeList.get(position).getDelay() + " min");
+                delay.setText(convertedDelay + " min");
             }
         }
         return v;

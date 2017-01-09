@@ -102,37 +102,37 @@ public class ConvertTime {
         return Integer.parseInt(date.substring(6));
     }
 
-    public static int getHourFromString(String time){
-        int hour = 0;
+    public static String getHourFromString(String time){
+        String hour = null;
 
         if(time.substring(1,2).equals(":")){
-            hour = Integer.parseInt(time.substring(0,1));
+            hour = time.substring(0,1);
         }
         else{
-            hour = Integer.parseInt(time.substring(0,2));
+            hour = time.substring(0,2);
         }
 
 
         return hour;
     }
 
-    public static int getMinuteFromString(String time){
-        int minute = 0;
+    public static String getMinuteFromString(String time){
+        String minute = null;
 
         if(time.substring(1,2).equals(":")){
             if(time.substring(2,3).equals("0")) {
-                minute = Integer.parseInt(time.substring(3,4));
+                minute = time.substring(3,4);
             }
             else{
-                minute = Integer.parseInt(time.substring(2,4));
+                minute = time.substring(2,4);
             }
         }
         else{
             if(time.substring(3,4).equals("0")) {
-                minute = Integer.parseInt(time.substring(4,5));
+                minute = time.substring(4,5);
             }
             else{
-                minute = Integer.parseInt(time.substring(3,5));
+                minute = time.substring(3,5);
             }
         }
         return minute;

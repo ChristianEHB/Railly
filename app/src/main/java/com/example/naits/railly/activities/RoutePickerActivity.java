@@ -30,6 +30,9 @@ import java.util.List;
 import com.example.naits.railly.model.StationCache;
 import com.example.naits.railly.util.HttpHandler;
 
+import static com.example.naits.railly.util.ConvertTime.getHourFromString;
+import static com.example.naits.railly.util.ConvertTime.getMinuteFromString;
+
 public class RoutePickerActivity extends AppCompatActivity {
 
     private ExpandableListView lvRoute;
@@ -66,8 +69,8 @@ public class RoutePickerActivity extends AppCompatActivity {
 
     //TODO: Put this in connectionDAO
     private String setUrl(String departure, String arrival, String time, String date) {
-        String hour = time.substring(0, 2);
-        String min = time.substring(3);
+        String hour = String.valueOf(3 + Integer.parseInt(getHourFromString(time)));
+        String min = getMinuteFromString(time);
 
         String day = date.substring(0, 2);
         String month = date.substring(3, 5);
